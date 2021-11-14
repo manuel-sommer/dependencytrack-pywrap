@@ -28,6 +28,13 @@ class DependencyTrackAPI(object):
         else:
             return (f"Unable to list projects", response.status_code)
 
+    def get_project(self, uuid):
+        response = self.session.get(self.apicall + f"/v1/project/{uuid}/")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unable to find project", response.status_code)
+
     def get_uuid_from_projectname(self, projectname):
         uuid=None
         json = self.list_projects()

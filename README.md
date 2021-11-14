@@ -10,5 +10,7 @@ dta.version()
 # Return a list of all projects
 dta.list_projects()
 # Return the UUID from a projectname
-dta.get_uuid_from_projectname("TestProjectName")
+project_uuid = dta.get_uuid_from_projectname("TestProjectName")
+# Return the Project from the uuid
+dta.get_project(uuid=project_uuid)
 ```
