@@ -35,11 +35,13 @@ class DependencyTrackAPI(object):
         else:
             return (f"Unable to find project", response.status_code)
 
-    def get_uuid_from_projectname(self, projectname):
-        uuid=None
-        json = self.list_projects()
-        for iterator in json:
-            if iterator['name']==projectname:
-                uuid = iterator['uuid']
-                break
-        return uuid
+    def get_project_lookup(self, name, version=None):
+        if version == None:
+            lookup = "name=" + name
+        else:
+            lookup = "name=" + name +"&version="+version
+        response = self.session.get(self.apicall + f"/v1/project/lookup?{lookup}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            return (f"Unable to find project", response.status_code)
