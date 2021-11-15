@@ -16,5 +16,7 @@ dta.get_project(uuid='project_uuid')
 # Delete project with uuid
 dta.delete_project_uuid('project_uuid')
 # Create a new project
-dta.create_project(name="testproject")
+dta.create_project(name="testproject",classifier = "APPLICATION")
+# Update a new project
+dta.update_project(uuid="project_uuid",name="newprojectname")
 ```
