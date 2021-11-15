@@ -12,5 +12,9 @@ dta.list_projects()
 # Return the project from a projectname and version
 dta.get_project_lookup(name="project", version="1.0")
 # Return the Project from the uuid
-dta.get_project(uuid=project_uuid)
+dta.get_project(uuid='project_uuid')
+# Delete project with uuid
+dta.delete_project_uuid('project_uuid')
+# Create a new project
+dta.create_project(name="testproject")
 ```
