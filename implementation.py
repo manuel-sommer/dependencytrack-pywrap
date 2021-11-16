@@ -86,3 +86,110 @@ class DependencyTrackAPI(object):
             return (f"Project with specified name already exists", response.status_code)
         else:
             return (f"Unable to update the project", response.status_code)
+    #This section is all about vulnerabilities
+    
+    def get_all_vulnerabilities(self):
+        response = self.session.get(self.apicall +f"/v1/vulnerability")
+        if response.status_code==200:
+            return response.json()
+        else:
+            return (f"Unable to find any vulnerabilities ", response.status_code)
+
+    def get_vulnerability(self,source,vuln):
+        """
+        this method returns a specific vulnerability
+        source:string(to be filled later)
+        vuln:string(to be filled later)
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/source/{source}/vuln/{vuln}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            else:
+                return (f"The vulnerability could not be found ", response.status_code)
+    
+    def get_component_vulnerability(self,uuid,supressed=False):
+        """ 
+        Returns a list of all vulnerabilities for a specific component.
+        uuid:
+        supprressed: optionally includes supressed vulnerabilities
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/component/{uuid}?supressed={supressed}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            elif response.status_code==403:
+                return (f"Access to the specified component is forbidden ", response.status_code)
+            else:
+                return (f"The component could not be found", response.status_code)
+    
+    def get_project_vlnerability(self, uuid,supressed=False):
+        """ 
+        Returns a list of all vulnerabilities for a specific project.
+        uuid:
+        supprressed: optionally includes supressed vulnerabilities(boolean)
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            elif response.status_code==403:
+                return (f"Access to the specified project is forbidden ", response.status_code)
+            else:
+                return (f"The project could not be found", response.status_code)
+    
+    def get_vulnerability_uuid(self,uuid):
+        """
+        returns a specific vulnerability
+        uuid: The UUID of the vulnerability 
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/{uuid}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            else:
+                return (f"The vulnerability could not be found ", response.status_code)
+
+    def get_affected_project(self,source,vuln):
+        """ 
+        Returns a list of all projects affected by a specific vulnerability
+        source:
+        vuln:
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/source/{source}/vuln/{vuln}/projects")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            else:
+                return (f"The vulnerability could not be found ", response.status_code)
+    #TODO: POST,POST /v1/vulnerability
+    #TODO: DELETE, POST  /v1/vulnerability/source/{source}/vuln/{vulnId}/component/{component}, DELETE, POST /v1/vulnerability/{uuid}/component/{component}
+    
+    #this section is all about findings
+    
+    def get_project_vlnerability(self, uuid,supressed=False):
+        """ 
+        Returns a list of all findings for a specific project.
+        uuid:
+        supprressed: optionally includes supressed vulnerabilities(boolean)
+        """
+        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
+        if response.status_code==200:
+            return response.json()
+        else:
+            if response.status_code==401:
+                return (f"Unauthorized",response.status_code)
+            elif response.status_code==403:
+                return (f"Access to the specified project is forbidden ", response.status_code)
+            else:
+                return (f"The project could not be found", response.status_code)
