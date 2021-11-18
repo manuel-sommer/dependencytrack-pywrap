@@ -86,22 +86,36 @@ class DependencyTrackAPI(object):
             return (f"Project with specified name already exists", response.status_code)
         else:
             return (f"Unable to update the project", response.status_code)
+    
     #This section is all about vulnerabilities
     
-    def get_all_vulnerabilities(self):
-        response = self.session.get(self.apicall +f"/v1/vulnerability")
-        if response.status_code==200:
-            return response.json()
+    def get_all_vulnerabilities(self, pageSize = 100):
+        vulnerability_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/vulnerability", params = {'pageSize': pageSize, 'pageNumber': pageNumber})
+        for vul in range(0,len(response.json())):
+            vulnerability_list.append(response.json()[vul-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall +f"/v1/vulnerability", params = {'pageSize': pageSize, 'pageNumber': pageNumber})
+            for vul in range(0,len(response.json())):
+                vulnerability_list.append(response.json()[vul - 1])
+        if response.status_code == 200:
+            return vulnerability_list
         else:
             return (f"Unable to find any vulnerabilities ", response.status_code)
 
-    def get_vulnerability(self,source,vuln):
+    def get_vulnerability(self, source, vuln):
         """
         this method returns a specific vulnerability
         source:string(to be filled later)
         vuln:string(to be filled later)
         """
         response = self.session.get(self.apicall +f"/v1/vulnerability/source/{source}/vuln/{vuln}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            if response.status_code == 401:
         if response.status_code==200:
             return response.json()
         else:
@@ -110,36 +124,56 @@ class DependencyTrackAPI(object):
             else:
                 return (f"The vulnerability could not be found ", response.status_code)
     
-    def get_component_vulnerability(self,uuid,supressed=False):
+    def get_component_vulnerability(self,uuid,supressed=False, pageSize = 100):
         """ 
         Returns a list of all vulnerabilities for a specific component.
         uuid:
         supprressed: optionally includes supressed vulnerabilities
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/component/{uuid}?supressed={supressed}")
-        if response.status_code==200:
-            return response.json()
+        vulnerability_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/vulnerability/component/{uuid}?supressed={supressed}", params={
+                                    "pageSize": pageSize, "pageNumber": pageNumber})
+        for vul in range(0, len(response.json())):
+            vulnerability_list.append(response.json()[vul-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/vulnerability/component/{uuid}?supressed={supressed}", params={
+                                        'pageSize': pageSize, 'pageNumber': pageNumber})
+            for vul in range(0, len(response.json())):
+                vulnerability_list.append(response.json()[vul - 1])
+        if response.status_code == 200:
+            return vulnerability_list
         else:
-            if response.status_code==401:
-                return (f"Unauthorized",response.status_code)
-            elif response.status_code==403:
+            if response.status_code == 401:
+                return (f"Unauthorized", response.status_code)
+            elif response.status_code == 403:
                 return (f"Access to the specified component is forbidden ", response.status_code)
             else:
                 return (f"The component could not be found", response.status_code)
     
-    def get_project_vlnerability(self, uuid,supressed=False):
+    def get_project_vulnerability(self, uuid, supressed=False, pageSize = 100):
         """ 
         Returns a list of all vulnerabilities for a specific project.
         uuid:
         supprressed: optionally includes supressed vulnerabilities(boolean)
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
-        if response.status_code==200:
-            return response.json()
+        vulnerability_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for vul in range(0, len(response.json())):
+            vulnerability_list.append(response.json()[vul-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/vulnerability/project/{uuid}?supressed={supressed}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+            for vul in range(0, len(response.json())):
+                vulnerability_list.append(response.json()[vul - 1])
+        if response.status_code == 200:
+            return vulnerability_list
         else:
-            if response.status_code==401:
-                return (f"Unauthorized",response.status_code)
-            elif response.status_code==403:
+            if response.status_code == 401:
+                return (f"Unauthorized", response.status_code)
+            elif response.status_code == 403:
                 return (f"Access to the specified project is forbidden ", response.status_code)
             else:
                 return (f"The project could not be found", response.status_code)
@@ -149,12 +183,12 @@ class DependencyTrackAPI(object):
         returns a specific vulnerability
         uuid: The UUID of the vulnerability 
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/{uuid}")
-        if response.status_code==200:
+        response = self.session.get(self.apicall + f"/v1/vulnerability/{uuid}")
+        if response.status_code == 200:
             return response.json()
         else:
-            if response.status_code==401:
-                return (f"Unauthorized",response.status_code)
+            if response.status_code == 401:
+                return (f"Unauthorized", response.status_code)
             else:
                 return (f"The vulnerability could not be found ", response.status_code)
 
@@ -165,11 +199,11 @@ class DependencyTrackAPI(object):
         vuln:
         """
         response = self.session.get(self.apicall +f"/v1/vulnerability/source/{source}/vuln/{vuln}/projects")
-        if response.status_code==200:
+        if response.status_code == 200:
             return response.json()
         else:
-            if response.status_code==401:
-                return (f"Unauthorized",response.status_code)
+            if response.status_code == 401:
+                return (f"Unauthorized", response.status_code)
             else:
                 return (f"The vulnerability could not be found ", response.status_code)
     #TODO: POST,POST /v1/vulnerability
@@ -177,19 +211,336 @@ class DependencyTrackAPI(object):
     
     #this section is all about findings
     
-    def get_project_vlnerability(self, uuid,supressed=False):
+    def get_project_finding(self, uuid, supressed=False, pageSize = 100):
         """ 
         Returns a list of all findings for a specific project.
         uuid:
         supprressed: optionally includes supressed vulnerabilities(boolean)
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
-        if response.status_code==200:
-            return response.json()
+        finding_list=list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/finding/project/{uuid}?supressed={supressed}", params = {"pageSize": pageSize, "pageNumber": pageNumber})
+        for finding in range(0, len(response.json())):
+            finding_list.append(response.json()[finding-1])
+        while len(response.json()) == pageSize:
+            response = self.session.get(self.apicall + f"/v1/finding/project/{uuid}?supressed={supressed}", params={
+                                        "pageSize": pageSize, "pageNumber": pageNumber})
+            for finding in range(0, len(response.json())):
+                finding_list.append(response.json()[finding-1])
+        if response.status_code == 200:
+            return finding_list
         else:
-            if response.status_code==401:
-                return (f"Unauthorized",response.status_code)
-            elif response.status_code==403:
+            if response.status_code == 401:
+                return (f"Unauthorized", response.status_code)
+            elif response.status_code == 403:
                 return (f"Access to the specified project is forbidden ", response.status_code)
             else:
                 return (f"The project could not be found", response.status_code)
+
+    #License
+    
+    def get_list_license(self, pageSize = 100):
+        """Returns a list of all licenses with complete metadata for each license"""
+        license_list=list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/license", params = {"pageSize": pageSize,"pageNumber": pageNumber})
+        for lice in range(0,len(response.json())):
+            license_list.append(response.json()[lice-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/license", params = {"pageSize": pageSize, "pageNumber": pageNumber})
+            for lice in range(0, len(response.json())):
+                license_list.append(response.json()[lice-1])
+        if response.status_code == 200:
+            return license_list
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_license(self, licenseId):
+        """
+        Returns specific license
+        licenseID: (string) The SPDX License ID of the license to retrieve
+        """
+        response = self.session.get(self.apicall + f"/v1/license/{licenseId}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return(f"The license could not be found ", response.status_code)
+        else:
+            return response.status_code
+        
+    def get_license_concise(self, pageSize = 100):
+        """Returns a concise listing of all licenses"""
+        license_list = list()
+        pageNumber = 1
+        response = self.session.get(
+            self.apicall + f"/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for lice in range(0, len(response.json())):
+            license_list.append(response.json()[lice-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(
+                self.apicall + f"/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for lice in range(0, len(response.json())):
+                license_list.append(response.json()[lice-1])
+        if response.status_code == 200:
+            return license_list
+        else:
+            return (f"Unauthorized ", response.status_code)
+    
+    #Metrics 
+    
+    def get_all_metrics(self, pageSize = 100):
+        """
+        Returns the sum of all vulnerabilities in the database by year and month
+        """
+        metrics_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/metrics/vulnerability", params = {"pageSize": pageSize,"pageNumber": pageNumber})
+        for metric in range(0, len(response.json())):
+            metrics_list.append(response.json()[metric-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall +f"/v1/metrics/vulnerability", params = {"pageSize": pageSize,"pageNumber": pageNumber})
+            for metric in range(0, len(response.json())):
+                metrics_list.append(response.json()[metric-1])
+        if response.status_code == 200:
+            return metrics_list
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_metrics_portolio_bydate(self, date):
+        """ 
+        Returns historical metrics for the entire portfolio from a specific date.
+        date: The start date to retrieve metric. Date format must be YYYYMMDD
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/portfolio/since/{date}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unauthorized", response.status_code)
+        
+    def get_metrics_project_bydate(self, uuid, date):
+        """ 
+        Returns historical metrics for a specific project from a specific date
+        date: The start date to retrieve metric. Date format must be YYYYMMDD.
+        uuid: The UUID of the project to retrieve metrics for.
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/project/{uuid}/since/{date}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden ", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+
+    def get_current_metrics_portfolio(self):
+        """
+        Returns current metrics for entire portfolio
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/portfolio/current")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_metrics_dayNumber(self, days):
+        """ 
+        Returns X days of historical metrics for the entire portfolio(int32)
+        days: The number of days back to retrieve metrics for.
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/portfolio/{days}/days")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_metrics_refresh_portfolio(self):
+        """ 
+        Requests a refresh of the portfolio metrics
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/portfolio/refresh")
+        if response.status_code == 200:
+            return (f"successful operation ", response.status_code)
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_metrics_specific_project(self, uuid):
+        """ 
+        returns current metrics for a specific project.
+        uuid: The UUID of the project to retrieve metrics for
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/project/{uuid}/current")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unauthorized ", response.status_code)
+        
+    def get_metrics_specific_project_days(self, uuid, days):
+        """ 
+        Returns X days of historical metrics for a specific project
+        uuid: The UUID of the project to retrieve metrics for.
+        days: The number of days back to retrieve metrics for.
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/project/{uuid}/days/{days}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden ", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+
+    def get_metrics_refresh_project(self, uuid):
+        """ 
+        requests a refresh of a specific project metrics.
+        uuid: The UUID of the project to retrieve metrics for.
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/project/{uuid}/refresh")
+        if response.status_code == 200:
+            return (f"successful operation ", response.status_code)
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden ", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+
+    def get_current_metrics_component(self, uuid):
+        """ 
+        Returns current metrics for a specific component
+        uuid: The UUID of the component to retrieve metrics for.
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/component/{uuid}/current")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden ", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+    
+    def get_metrics_component_bydate(self, uuid, date, pageSize = 100):
+        """
+        Returns historical metrics for a specific component from a specific date
+
+        Args:
+            uuid (string): The UUID of the component to retrieve metrics for.
+            date (string): The start date to retrieve metrics for.(Date format must be YYYYMMDD)
+        """
+        metrics_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/metrics/component/{uuid}/since/{date}", params = {"pageSize": pageSize, "pageNumber": pageNumber})
+        for metric in range(0, len(response.json())):
+            metrics_list.append(response.json()[metric-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{date}", params = {"pageSize": pageSize,"pageNumber": pageNumber})
+            for metric in range(0, len(response.json())):
+                metrics_list.append(response.json()[metric-1])
+        if response.status_code == 200:
+            return metrics_list
+        else:
+            return (f"Unauthorized ", response.status_code)
+        
+    def get_metrics_component_bydays(self, uuid, days, pageSize=100):
+        """
+        Returns X days of historical metrics for a specific component
+
+        Args:
+            uuid (string): The UUID of the component to retrieve metrics for.
+            days (int32): The number of days back to retrieve metrics for.
+        """
+        metrics_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{days}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for metric in range(0, len(response.json())):
+            metrics_list.append(response.json()[metric-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{days}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for metric in range(0, len(response.json())):
+                metrics_list.append(response.json()[metric-1])
+        if response.status_code == 200:
+            return metrics_list
+        else:
+            return (f"Unauthorized ", response.status_code)
+
+    def get_metrics_component_refresh(self, uuid):
+        """[Requests a refresh of a specific components metrics]
+
+        Args:
+            uuid ([string]): [The UUID of the component to retrieve metrics for.]
+
+        Returns:
+            [string]: [status code]
+        """
+        response = self.session.get(self.apicall +f"/v1/metrics/component/{uuid}/refresh")
+        if response.status_code == 200:
+            return (f"successful operation ", response.status_code)
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden ", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+
+#TODO: user API
+
+#TODO: violationanalysis API
+
+#TODO: team API
+
+#TODO: service API
+
+#TODO: default API
+
+#TODO: search API
+
+#TODO: repository API
+
+#TODO: violation API
+
+#TODO: policy API
+
+#TODO: policyCondition API
+
+#TODO: permission API
+
+#TODO: oidc API
+
+#TODO: licenseGroup API
+
+#TODO: ladp API
+
+#TODO: cwe API
+
+#TODO: configProperty API
+
+#TODO: component API
+
+#TODO: calculator API
+
+#TODO: bom API
+
+#TODO: analysis API
+
+#TODO: badge API
+
+#TODO: acl API
