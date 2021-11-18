@@ -86,6 +86,7 @@ class DependencyTrackAPI(object):
             return (f"Project with specified name already exists", response.status_code)
         else:
             return (f"Unable to update the project", response.status_code)
+    
     #This section is all about vulnerabilities
     
     def get_all_vulnerabilities(self, pageSize = 100):
@@ -466,3 +467,47 @@ class DependencyTrackAPI(object):
             return (f"Project not found", response.status_code)
         else:
             return (response.status_code)
+
+#TODO: user API
+
+#TODO: violationanalysis API
+
+#TODO: team API
+
+#TODO: service API
+
+#TODO: default API
+
+#TODO: search API
+
+#TODO: repository API
+
+#TODO: violation API
+
+#TODO: policy API
+
+#TODO: policyCondition API
+
+#TODO: permission API
+
+#TODO: oidc API
+
+#TODO: licenseGroup API
+
+#TODO: ladp API
+
+#TODO: cwe API
+
+#TODO: configProperty API
+
+#TODO: component API
+
+#TODO: calculator API
+
+#TODO: bom API
+
+#TODO: analysis API
+
+#TODO: badge API
+
+#TODO: acl API
