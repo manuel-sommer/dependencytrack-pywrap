@@ -203,7 +203,8 @@ class DependencyTrackAPI(object):
             else:
                 return (f"The project could not be found", response.status_code)
 
-    #all about lincese 
+    #License
+    
     def get_list_license(self, pageSize = 100):
         """Returns a list of all licenses with complete metadata for each license"""
         license_list=list()
