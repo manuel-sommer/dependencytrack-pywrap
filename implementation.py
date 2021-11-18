@@ -95,7 +95,7 @@ class DependencyTrackAPI(object):
         response = self.session.get(self.apicall +f"/v1/vulnerability", params = {'pageSize': pageSize, 'pageNumber': pageNumber})
         for vul in range(0,len(response.json())):
             vulnerability_list.append(response.json()[vul-1])
-        while len(response.json()) == pageNumber:
+        while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall +f"/v1/vulnerability", params = {'pageSize': pageSize, 'pageNumber': pageNumber})
             for vul in range(0,len(response.json())):
@@ -120,15 +120,26 @@ class DependencyTrackAPI(object):
             else:
                 return (f"The vulnerability could not be found ", response.status_code)
     
-    def get_component_vulnerability(self,uuid,supressed=False):
+    def get_component_vulnerability(self,uuid,supressed=False, pageSize = 100):
         """ 
         Returns a list of all vulnerabilities for a specific component.
         uuid:
         supprressed: optionally includes supressed vulnerabilities
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/component/{uuid}?supressed={supressed}")
+        vulnerability_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/vulnerability/component/{uuid}?supressed={supressed}", params={
+                                    "pageSize": pageSize, "pageNumber": pageNumber})
+        for vul in range(0, len(response.json())):
+            vulnerability_list.append(response.json()[vul-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/vulnerability/component/{uuid}?supressed={supressed}", params={
+                                        'pageSize': pageSize, 'pageNumber': pageNumber})
+            for vul in range(0, len(response.json())):
+                vulnerability_list.append(response.json()[vul - 1])
         if response.status_code == 200:
-            return response.json()
+            return vulnerability_list
         else:
             if response.status_code == 401:
                 return (f"Unauthorized", response.status_code)
@@ -137,15 +148,24 @@ class DependencyTrackAPI(object):
             else:
                 return (f"The component could not be found", response.status_code)
     
-    def get_project_vlnerability(self, uuid,supressed=False):
+    def get_project_vulnerability(self, uuid, supressed=False, pageSize = 100):
         """ 
         Returns a list of all vulnerabilities for a specific project.
         uuid:
         supprressed: optionally includes supressed vulnerabilities(boolean)
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
+        vulnerability_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for vul in range(0, len(response.json())):
+            vulnerability_list.append(response.json()[vul-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/vulnerability/project/{uuid}?supressed={supressed}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+            for vul in range(0, len(response.json())):
+                vulnerability_list.append(response.json()[vul - 1])
         if response.status_code == 200:
-            return response.json()
+            return vulnerability_list
         else:
             if response.status_code == 401:
                 return (f"Unauthorized", response.status_code)
@@ -187,15 +207,24 @@ class DependencyTrackAPI(object):
     
     #this section is all about findings
     
-    def get_project_vlnerability(self, uuid,supressed=False):
+    def get_project_finding(self, uuid, supressed=False, pageSize = 100):
         """ 
         Returns a list of all findings for a specific project.
         uuid:
         supprressed: optionally includes supressed vulnerabilities(boolean)
         """
-        response = self.session.get(self.apicall +f"/v1/vulnerability/project/{uuid}?supressed={supressed}")
+        finding_list=list()
+        pageNumber = 1
+        response = self.session.get(self.apicall +f"/v1/finding/project/{uuid}?supressed={supressed}", params = {"pageSize": pageSize, "pageNumber": pageNumber})
+        for finding in range(0, len(response.json())):
+            finding_list.append(response.json()[finding-1])
+        while len(response.json()) == pageSize:
+            response = self.session.get(self.apicall + f"/v1/finding/project/{uuid}?supressed={supressed}", params={
+                                        "pageSize": pageSize, "pageNumber": pageNumber})
+            for finding in range(0, len(response.json())):
+                finding_list.append(response.json()[finding-1])
         if response.status_code == 200:
-            return response.json()
+            return finding_list
         else:
             if response.status_code == 401:
                 return (f"Unauthorized", response.status_code)
