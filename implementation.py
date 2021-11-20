@@ -111,7 +111,7 @@ class DependencyTrackAPI(object):
         else:
             return (f"Unable to find any vulnerabilities ", response.status_code)
 
-    def get_vulnerability(self, source, vuln,):
+    def get_vulnerability(self, source, vuln):
         """
         this method returns a specific vulnerability
         source:string(to be filled later)
@@ -123,7 +123,7 @@ class DependencyTrackAPI(object):
             return response.json()
         else:
             if response.status_code == 401:
-                return (f"Unauthorized", response.status_code)
+                return (f"Unauthorized ", response.status_code)
             else:
                 return (f"The vulnerability could not be found ", response.status_code)
 
