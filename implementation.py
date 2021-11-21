@@ -538,8 +538,32 @@ class DependencyTrackAPI(object):
 
 # TODO: search API
 
-# TODO: repository API
+# Repository API
+    def get_repository(self, pageSize=100):
+        """Returns a list of all repositories
 
+        Args:
+            pageSize (int, optional): [description]. Defaults to 100.
+
+        Returns:
+            list : list of repositories
+        """
+        repository_list = list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/repository", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for repos in range(0,len(response.json)):
+            repository_list.append(response.json()[repos-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+        response = self.session.get(
+            self.apicall + f"/v1/repository", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for repos in range(0, len(response.json)):
+            repository_list.append(response.json()[repos-1])
+        if response.status_code == 200:
+            return repository_list
+        elif response.status_code == 401:
+                return (f"Unauthorized ", response.status_code)
+    
 # TODO: violation API
 
 # TODO: policy API
@@ -564,7 +588,33 @@ class DependencyTrackAPI(object):
 
 # TODO: bom API
 
-# TODO: analysis API
+    # analysis API
+
+    def get_analysis(self, project, component, vulnerability):
+        """Retrieves an analysis trail
+
+        Args:
+            project (string): The UUID of the project
+            component (string): The UUID of the component
+            vulnerability (string): The UUID of the vulnerability
+
+        Returns:
+            json: 
+        """
+        response = self.session.get(self.apicall + f"/v1/analysis?project={project}&component={component}&vulnerability={vulnerability}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The project, component, or vulnerability could not be found ", response.status_code)
+        else:
+            return response.status_code
+    
+    def put_analysis(self):
+        #Improve the method
+        pass
+
 
 # TODO: badge API
 
@@ -583,15 +633,14 @@ class DependencyTrackAPI(object):
         
         if response.status_code == 200:
             return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The UUID of the team or project could not be found ", response.status_code)
+        elif response.status_code == 409:
+            return (f"A mapping with the same team and project already exists ", response.status_code)
         else:
-            if response.status_code == 401:
-                return (f"Unauthorized ", response.status_code)
-            elif response.status_code == 404:
-                return (f"The UUID of the team or project could not be found ", response.status_code)
-            elif response.status_code == 409:
-                return (f"A mapping with the same team and project already exists ", response.status_code)
-            else:
-                return response.status_code
+            return response.status_code
             
     def get_acl(self, uuid, excludeInactive=False):
         """[Returns the projects assigned to the specified team]
@@ -602,11 +651,10 @@ class DependencyTrackAPI(object):
         response = self.session.get(self.apicall + f"/v1/acl/team/{uuid}?excludeInactive={excludeInactive}")
         if response.status_code == 200:
             return response.json()
-        else:
-            if response.status_code == 401:
-                return (f"Unauthorized ", response.status_code)
-            elif response.status_code == 404:
-                return (f"The UUID of the team could not be found ", response.status_code)
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The UUID of the team could not be found ", response.status_code)
 
     def delete_acl(self, teamUuid,projectUuid):
         """
@@ -619,10 +667,9 @@ class DependencyTrackAPI(object):
         response = self.session.delete(self.apicall + f"/v1/acl/mapping/team/{teamUuid}/project/{projectUuid}")
         if response.status_code == 200:
             return (f"successful operation")
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The UUID of the team or project could not be found ", response.status_code)
         else:
-            if response.status_code == 401:
-                return (f"Unauthorized ", response.status_code)
-            elif response.status_code == 404:
-                return (f"The UUID of the team or project could not be found ", response.status_code)
-            else:
-                return response.status_code
+            return response.status_code
