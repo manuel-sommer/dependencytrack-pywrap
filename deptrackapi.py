@@ -1,5 +1,4 @@
 import requests
-import json
 
 
 class DependencyTrackAPI(object):
@@ -610,8 +609,6 @@ class DependencyTrackAPI(object):
             return repository_list
         elif response.status_code == 401:
                 return (f"Unauthorized ", response.status_code)
-    
-    
     
 # TODO: violation API
 
