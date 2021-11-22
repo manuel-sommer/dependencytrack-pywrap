@@ -91,8 +91,55 @@ class DependencyTrackAPI(object):
         else:
             return (f"Unable to update the project", response.status_code)
 
-    # This section is all about vulnerabilities
+    # this section is all about projectProperty
+    def get_projectproperty(self, uuid):
+        response = self.session.get(self.apicall + f"/v1/project/{uuid}/property")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return (f"Unable to find project", response.status_code)
 
+    def update_projectproperty(self, uuid, name=None, classifier=None):
+        # TODO add more options
+        data = {
+            "uuid": uuid
+        }
+        if name:
+            data['name'] = name
+        if classifier:
+            data['classifier'] = classifier
+        response = self.session.post(self.apicall + f"/v1/project/{uuid}/property", json=data)
+        if response.status_code == 200:
+            return (f"Successfully updated the project", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project with specified uuid could not be found", response.status_code)
+        elif response.status_code == 409:
+            return (f"Project with specified name already exists", response.status_code)
+        else:
+            return (f"Unable to update the project", response.status_code)
+
+    def create_projectproperty(self, uuid, name, classifier):
+        # TODO add more options
+        data = {
+            "name": name,
+            "classifier": classifier
+        }
+        response = self.session.put(self.apicall + f"/v1/project/{uuid}/property", json=data)
+        if response.status_code == 201:
+            return (f"Successfully created the project", response.status_code)
+        elif response.status_code == 409:
+            return (f"Project with specified name already exists", response.status_code)
+        else:
+            return (f"Unable to create the project", response.status_code)
+
+    def delete_project_uuid(self, uuid):
+        response = self.session.delete(self.apicall + f"/v1/project/{uuid}/property")
+        if response.status_code == 204:
+            return (f"Successfully deleted the project", response.status_code)
+        else:
+            return (f"Unable to delete the project", response.status_code)
+
+    # This section is all about vulnerabilities
     def get_all_vulnerabilities(self, pageSize=100):
         vulnerability_list = list()
         pageNumber = 1
@@ -564,6 +611,8 @@ class DependencyTrackAPI(object):
         elif response.status_code == 401:
                 return (f"Unauthorized ", response.status_code)
     
+    
+    
 # TODO: violation API
 
 # TODO: policy API
@@ -579,8 +628,6 @@ class DependencyTrackAPI(object):
 # TODO: ladp API
 
 # TODO: cwe API
-
-# TODO: configProperty API
 
 # TODO: component API
 
