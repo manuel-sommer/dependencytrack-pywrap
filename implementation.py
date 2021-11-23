@@ -1,6 +1,6 @@
 import requests
 import json
-
+import base64
 
 class DependencyTrackAPI(object):
     def __init__(self, apiurl, apikey):
@@ -9,6 +9,7 @@ class DependencyTrackAPI(object):
         self.apicall = self.apiurl + "/api"
         self.session = requests.Session()
         self.session.headers.update({"X-Api-Key": f"{self.apikey}"})
+        self.session.headers.update({"Content-Type": "application/json"})
 
     def version(self):
         response = self.session.get(self.apicall + "/version")
@@ -578,16 +579,261 @@ class DependencyTrackAPI(object):
 
 # TODO: ladp API
 
-# TODO: cwe API
+    #cwe API
 
-# TODO: configProperty API
+    def get_cwe(self,pageSize=100):
+        """Returns a list of all CWEs
 
+        Args:
+            pageSize (int, optional): size of the page. Defaults to 100.
+
+        Returns:
+            JSON: json object 
+        """
+        cwe_list= list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/cwe",params={"pageSize":pageSize, "pageNumber": pageNumber})
+        for cwe in range(0,len(response.json())):
+            cwe_list.append(response.json()[cwe-1])
+        while len(response.json())== pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/cwe", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for cwe in range(0, len(response.json())):
+                cwe_list.append(response.json()[cwe - 1])
+        if response.status_code == 200:
+            return cwe_list
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        else:
+            return response.status_code
+        
+    def get_cweById(self,cweId):
+        """ Returns a specific CWE
+
+        Args:
+            cweId (int32): The CWE ID of the CWE to retrieve
+
+        Returns:
+            JSON: {
+                    "cweId": 0,
+                    "name": "string"
+                    }
+        """
+        response = self.session.get(self.apicall + f"/v1/cwe/{cweId}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The CWE could not be found ", response.status_code)
+        else:
+            return response.status_code
+        
+    #configProperty API
+    
+    def get_configProperty(self, pageSize=100):
+        """
+        Returns a list of all ConfigProperties for the specified groupName
+
+        Returns:
+            list: list of all configProperty in json
+        """
+        config_list=list()
+        pageNumber = 1
+        response = self.session.get(self.apicall + f"/v1/configProperty",params={"pageSize":pageSize,"pageNumber":pageNumber})
+        for config in range(0,len(response.json())):
+            config_list.append(response.json()[config]-1)
+        while len(response.json())==pageSize:
+            pageNumber += 1
+            response = self.session.get(self.apicall + f"/v1/configProperty", params={
+                                        "pageSize": pageSize, "pageNumber": pageNumber})
+            for config in range(0, len(response.json())):
+                config_list.append(response.json()[config] - 1)
+        if response.status_code == 200:
+            return config_list
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        else:
+            return (response.status_code)
+        
+    def post_configProperty(self,body):
+        """Update a config property
+
+        Args:
+            body (JSON): {
+                            "groupName": "string",
+                            "propertyName": "string",
+                            "propertyValue": "string",
+                            "propertyType": "BOOLEAN",
+                            "description": "string"
+                            }
+
+        Returns:
+            JSON: Json object which was sent successful
+        """
+        response = self.session.post(self.apicall + f"/v1/configProperty",data=body)
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"The config property could not be found ", response.status_code)
+        else:
+            return response.status_code
+    
+    def post_configPropertyAgregate(self, body):
+        """Update a config property
+
+        Args:
+            body (JSON): {
+                            "groupName": "string",
+                            "propertyName": "string",
+                            "propertyValue": "string",
+                            "propertyType": "BOOLEAN",
+                            "description": "string"
+                            }
+
+        Returns:
+            JSON: Json object which was sent successful
+        """
+        data=[body]
+        response = self.session.post(
+            self.apicall + f"/v1/configProperty", data=data)
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 404:
+            return (f"One or more config properties could not be found ", response.status_code)
+        else:
+            return response.status_code
+        
 # TODO: component API
 
 # TODO: calculator API
 
-# TODO: bom API
+    # bom API
+    def get_bom_token(self,uuid):
+        """
+        Determines if there are any tasks associated with the token that are being processed, or in the queue to be processed.
+        This endpoint is intended to be used in conjunction with uploading a supported BOM document. Upon upload, a token will be returned. The token can then be queried using this endpoint to determine if any tasks (such as vulnerability analysis) is being performed on the BOM. A value of true indicates processing is occurring. A value of false indicates that no processing is occurring for the specified token. However, a value of false also does not confirm the token is valid, only that no processing is associated with the specified token.
 
+
+        Args:
+            uuid (string): The UUID of the token to query
+        """
+        response = self.session.get(self.apicall + f"/v1/bom/token/{uuid}")
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        else:
+            return response.status_code
+    
+    def get_bom_project(self,uuid,format="json"):
+        """Returns dependency metadata for a project in CycloneDX format
+
+        Args:
+            uuid (string): The UUID of the project to export
+            format (str, optional): . Defaults to "json". However by default API is xml
+
+        Returns:
+            xml or json: returns dependency metadata for a project in CycloneDX format in xml or json
+        """
+        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/project/{uuid}",params={"format":format})
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+    
+    def get_bom_component(self,uuid,format="json"):
+        """Returns dependency metadata for a component in CycloneDX format
+
+        Args:
+            uuid (string): The UUID of the component to export
+            format (str, optional): . Defaults to "json". However by default API is xml
+
+        Returns:
+            xml or json: returns dependency metadata for a component in CycloneDX format in xml or json
+        """
+        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/component/{uuid}",params={"format":format})
+        if response.status_code == 200:
+            return response.json()
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified component is forbidden", response.status_code)
+        elif response.status_code == 404:
+            return (f"Component not found", response.status_code)
+        else:
+            return (response.status_code)
+    
+    def post_bom(self, project, projectName, projectVersion, body, autoCreate=True):
+        #TODO: refactor for formadata
+        """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
+
+        Args:
+            project (string[formData]): project
+            projectName (string[formData]): project name
+            projectVersion ([type]): [description]
+            body (json): BOM data
+            autoCreate (bool, optional): create project if it does not exist", response". Defaults to True.
+
+        Returns:
+            response status code
+        """
+        data=dict()
+        data["project"] = project
+        data["projectName"] = projectName
+        data["projectVersion"] = projectVersion
+        data["body"] =body
+        data["autoCreate"] = autoCreate
+        response = self.session.post(self.apicall + f"/v1/bom", files=body)
+        if response.status_code == 200:
+            return (f"successful operation")
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+        
+    def put_bom(self, project, body):
+        """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
+
+        Args:
+            project (string): The UUID of the project
+            body (json): BOM data
+            autoCreate (bool, optional): create project if it does not exist", response". Defaults to True.
+
+        Returns:
+            response status code
+        """
+        data=dict()
+        data["project"]=project
+        data["bom"]=base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
+        response = self.session.put(
+            self.apicall + f"/v1/bom", data=json.dumps(data))
+        if response.status_code == 200:
+            return (f"successful operation")
+        elif response.status_code == 401:
+            return (f"Unauthorized ", response.status_code)
+        elif response.status_code == 403:
+            return (f"Access to the specified project is forbidden", response.status_code)
+        elif response.status_code == 404:
+            return (f"Project not found", response.status_code)
+        else:
+            return (response.status_code)
+        
+        
     # analysis API
 
     def get_analysis(self, project, component, vulnerability):
@@ -612,7 +858,7 @@ class DependencyTrackAPI(object):
             return response.status_code
     
     def put_analysis(self):
-        #Improve the method
+        #TODO: Improve this method
         pass
 
 
