@@ -9,8 +9,10 @@ from apicomponents.licence import DependencyTrackLicence
 from apicomponents.metrics import DependencyTrackMetrics
 from apicomponents.acl import DependencyTrackACL
 from apicomponents.bom import DependencyTrackBom
+from apicomponents.cwe import DependencyTrackCWE
+from apicomponents.configproperty import DependencyTrackConfigProperty
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicence, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicence, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
@@ -75,13 +77,9 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # TODO: ladp API
 
-# TODO: cwe API
-
 # TODO: component API
 
 # TODO: calculator API
-
-# TODO: bom API
 
 # TODO: badge API
 
