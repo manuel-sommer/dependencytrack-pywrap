@@ -1,4 +1,6 @@
 import requests
+import base64
+import json
 from apicomponents.project import DependencyTrackProject
 from apicomponents.projectProperty import DependencyTrackProjectProperty
 from apicomponents.vulnerability import DependencyTrackVulnerability
@@ -6,8 +8,9 @@ from apicomponents.finding import DependencyTrackFinding
 from apicomponents.licence import DependencyTrackLicence
 from apicomponents.metrics import DependencyTrackMetrics
 from apicomponents.acl import DependencyTrackACL
+from apicomponents.bom import DependencyTrackBom
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicence, DependencyTrackMetrics, DependencyTrackACL):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicence, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
