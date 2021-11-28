@@ -43,15 +43,18 @@ class DependencyTrackProject(object):
         else:
             return (f"Unable to delete the project", response.status_code)
 
-    def create_project(self, name, classifier):
+    def create_project(self, name, classifier, version, active=True):
         # TODO add more options
         data = {
             "name": name,
-            "classifier": classifier
+            "classifier": classifier,
+            "version": version,
+            "active": active
         }
         response = self.session.put(self.apicall + f"/v1/project", json=data)
         if response.status_code == 201:
-            return (f"Successfully created the project", response.status_code)
+            print(f"Successfully created the project", response.status_code)
+            return response.json()
         elif response.status_code == 409:
             return (f"Project with specified name already exists", response.status_code)
         else:

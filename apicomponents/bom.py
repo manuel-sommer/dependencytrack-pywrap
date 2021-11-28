@@ -1,3 +1,4 @@
+import base64,json
 class DependencyTrackBom(object):
     # bom API
     def get_bom_token(self,uuid):
@@ -33,9 +34,9 @@ class DependencyTrackBom(object):
         elif response.status_code == 401:
             return (f"Unauthorized ", response.status_code)
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden", response.status_code)
+            return (f"Access to the specified project is forbidden ", response.status_code)
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found ", response.status_code)
         else:
             return (response.status_code)
     
