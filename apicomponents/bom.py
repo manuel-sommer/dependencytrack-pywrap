@@ -108,6 +108,7 @@ class DependencyTrackBom(object):
         data=dict()
         data["project"]=project
         data["bom"]=base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
+        print(json.dumps(data))
         response = self.session.put(
             self.apicall + f"/v1/bom", data=json.dumps(data))
         if response.status_code == 200:

@@ -1,7 +1,6 @@
 import requests
 import base64
 import json
-from xml.etree import ElementTree
 from apicomponents.badge import DependencyTrackbadge
 from apicomponents.project import DependencyTrackProject
 from apicomponents.projectProperty import DependencyTrackProjectProperty
@@ -21,6 +20,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
         self.apicall = self.apiurl + "/api"
         self.session = requests.Session()
         self.session.headers.update({"X-Api-Key": f"{self.apikey}"})
+        self.session.headers.update({"Content-Type": "application/json"})
 
     def version(self):
         response = self.session.get(self.apicall + "/version")
@@ -107,3 +107,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
             return response.status_code
 
 
+dt=DependencyTrackAPI("http://localhost:8081","Z0g4jvxF1Yek3R8balySFj5kGahjR3oj")
+with open("/home/edismail/Desktop/x.json") as f:
+    body=json.load(f)
+print(dt.put_bom("09d3557d-f43c-45a1-923b-fc9cc51392e9",body))
