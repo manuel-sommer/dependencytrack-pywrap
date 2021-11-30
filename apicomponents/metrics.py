@@ -20,7 +20,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return metrics_list
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_portolio_bydate(self, date):
         """ 
@@ -32,7 +32,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         else:
-            return (f"Unauthorized", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_project_bydate(self, uuid, date):
         """ 
@@ -45,11 +45,11 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden ", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
             return (response.status_code)
 
@@ -62,7 +62,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_dayNumber(self, days):
         """ 
@@ -74,7 +74,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_refresh_portfolio(self):
         """ 
@@ -83,9 +83,9 @@ class DependencyTrackMetrics(object):
         response = self.session.get(
             self.apicall + f"/v1/metrics/portfolio/refresh")
         if response.status_code == 200:
-            return (f"successful operation ", response.status_code)
+            return (f"successful operation , {response.status_code}")
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_specific_project(self, uuid):
         """ 
@@ -97,7 +97,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_specific_project_days(self, uuid, days):
         """ 
@@ -110,11 +110,11 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden ", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
             return (response.status_code)
 
@@ -126,13 +126,13 @@ class DependencyTrackMetrics(object):
         response = self.session.get(
             self.apicall + f"/v1/metrics/project/{uuid}/refresh")
         if response.status_code == 200:
-            return (f"successful operation ", response.status_code)
+            return (f"successful operation , {response.status_code}")
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden ", response.status_code)
+            return (f"Access to the specified project is forbidden , {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
             return (response.status_code)
 
@@ -146,11 +146,11 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden ", response.status_code)
+            return (f"Access to the specified project is forbidden , {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
             return (response.status_code)
 
@@ -177,7 +177,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return metrics_list
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_component_bydays(self, uuid, days, pageSize=100):
         """
@@ -202,7 +202,7 @@ class DependencyTrackMetrics(object):
         if response.status_code == 200:
             return metrics_list
         else:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_component_refresh(self, uuid):
         """[Requests a refresh of a specific components metrics]
@@ -216,12 +216,12 @@ class DependencyTrackMetrics(object):
         response = self.session.get(
             self.apicall + f"/v1/metrics/component/{uuid}/refresh")
         if response.status_code == 200:
-            return (f"successful operation ", response.status_code)
+            return (f"successful operation , {response.status_code}")
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized , {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden ", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
             return (response.status_code)

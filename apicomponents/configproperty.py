@@ -22,9 +22,9 @@ class DependencyTrackConfigProperty(object):
         if response.status_code == 200:
             return config_list
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         else:
-            return (response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)
         
     def post_configProperty(self,body):
         """Update a config property
@@ -45,11 +45,11 @@ class DependencyTrackConfigProperty(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The config property could not be found ", response.status_code)
+            return (f"The config property could not be found, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)
     
     def post_configPropertyAgregate(self, body):
         """Update a config property
@@ -72,8 +72,8 @@ class DependencyTrackConfigProperty(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"One or more config properties could not be found ", response.status_code)
+            return (f"One or more config properties could not be found, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)

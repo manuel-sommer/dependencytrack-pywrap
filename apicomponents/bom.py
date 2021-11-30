@@ -1,3 +1,4 @@
+import base64,json
 class DependencyTrackBom(object):
     # bom API
     def get_bom_token(self,uuid):
@@ -13,7 +14,7 @@ class DependencyTrackBom(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         else:
             return response.status_code
     
@@ -31,13 +32,13 @@ class DependencyTrackBom(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
-            return (response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)
     
     def get_bom_component(self,uuid,format="json"):
         """Returns dependency metadata for a component in CycloneDX format
@@ -53,16 +54,16 @@ class DependencyTrackBom(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified component is forbidden", response.status_code)
+            return (f"Access to the specified component is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Component not found", response.status_code)
+            return (f"Component not found, {response.status_code}")
         else:
-            return (response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)
     
     def post_bom(self, project, projectName, projectVersion, body, autoCreate=True):
-        #TODO: refactor for formadata
+        #TODO: refactor for formdata
         """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
 
         Args:
@@ -85,13 +86,13 @@ class DependencyTrackBom(object):
         if response.status_code == 200:
             return (f"successful operation")
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
-            return (response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)
         
     def put_bom(self, project, body):
         """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
@@ -107,15 +108,16 @@ class DependencyTrackBom(object):
         data=dict()
         data["project"]=project
         data["bom"]=base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
+        print(json.dumps(data))
         response = self.session.put(
             self.apicall + f"/v1/bom", data=json.dumps(data))
         if response.status_code == 200:
             return (f"successful operation")
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
-            return (f"Access to the specified project is forbidden", response.status_code)
+            return (f"Access to the specified project is forbidden, {response.status_code}")
         elif response.status_code == 404:
-            return (f"Project not found", response.status_code)
+            return (f"Project not found, {response.status_code}")
         else:
-            return (response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)

@@ -1,4 +1,4 @@
-class DependencyTrackLicence(object):
+class DependencyTrackLicense(object):
     # License
 
     def get_list_license(self, pageSize=100):
@@ -51,5 +51,7 @@ class DependencyTrackLicence(object):
                 license_list.append(response.json()[lice-1])
         if response.status_code == 200:
             return license_list
+        elif response.status_code == 401:
+            return (f"Unauthorized, {response.status_code}")
         else:
-            return (f"Unauthorized ", response.status_code)
+            return ((response.content).decode("utf-8"), response.status_code)
