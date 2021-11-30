@@ -15,13 +15,13 @@ class DependencyTrackACL(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The UUID of the team or project could not be found ", response.status_code)
+            return (f"The UUID of the team or project could not be found, {response.status_code}")
         elif response.status_code == 409:
-            return (f"A mapping with the same team and project already exists ", response.status_code)
+            return (f"A mapping with the same team and project already exists, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("UTF-8"), response.status_code)
             
     def get_acl(self, uuid, excludeInactive=False):
         """[Returns the projects assigned to the specified team]
@@ -33,9 +33,9 @@ class DependencyTrackACL(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The UUID of the team could not be found ", response.status_code)
+            return (f"The UUID of the team could not be found, {response.status_code}")
 
     def delete_acl(self, teamUuid,projectUuid):
         """
@@ -49,8 +49,8 @@ class DependencyTrackACL(object):
         if response.status_code == 200:
             return (f"successful operation")
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The UUID of the team or project could not be found ", response.status_code)
+            return (f"The UUID of the team or project could not be found, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("UTF-8"), response.status_code)

@@ -1,7 +1,7 @@
 class DependencyTrackCWE(object):
     #cwe API
 
-    def get_cwe(self,pageSize=100):
+    def get_cwe(self, pageSize=100):
         """Returns a list of all CWEs
 
         Args:
@@ -23,11 +23,11 @@ class DependencyTrackCWE(object):
         if response.status_code == 200:
             return cwe_list
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)
         
-    def get_cweById(self,cweId):
+    def get_cweById(self, cweId):
         """ Returns a specific CWE
 
         Args:
@@ -45,6 +45,6 @@ class DependencyTrackCWE(object):
         elif response.status_code == 401:
             return (f"Unauthorized ", response.status_code)
         elif response.status_code == 404:
-            return (f"The CWE could not be found ", response.status_code)
+            return (f"The CWE could not be found, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)

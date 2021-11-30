@@ -18,7 +18,7 @@ class DependencyTrackProject(object):
             return (f"Unable to list projects", response.status_code)
 
     def get_project(self, uuid):
-        response = self.session.get(self.apicall + f"/v1/project/{uuid}/")
+        response = self.session.get(self.apicall + f"/v1/project/{uuid}")
         if response.status_code == 200:
             return response.json()
         else:
@@ -37,7 +37,7 @@ class DependencyTrackProject(object):
             return (f"Unable to find project", response.status_code)
 
     def delete_project_uuid(self, uuid):
-        response = self.session.delete(self.apicall + f"/v1/project/{uuid}/")
+        response = self.session.delete(self.apicall + f"/v1/project/{uuid}")
         if response.status_code == 204:
             return (f"Successfully deleted the project", response.status_code)
         else:

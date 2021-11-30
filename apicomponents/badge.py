@@ -17,13 +17,13 @@ class DependencyTrackbadge(object):
         if response.status_code == 200:
             return response.content
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The project could not be found ", response.status_code)
+            return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned. ", response.status_code)
+            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)
 
     def get_badgeByuuid(self, uuid):
         #TODO : follow up on response of this functionality
@@ -40,10 +40,10 @@ class DependencyTrackbadge(object):
         if response.status_code == 200:
             return response.content
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"The project could not be found ", response.status_code)
+            return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned. ", response.status_code)
+            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
-            return response.status_code
+            return ((response.content).decode("utf-8"), response.status_code)

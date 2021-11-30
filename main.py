@@ -2,18 +2,22 @@ import requests
 import base64
 import json
 from apicomponents.badge import DependencyTrackbadge
+from apicomponents.ldap import DependencyTrackLDAP
 from apicomponents.project import DependencyTrackProject
 from apicomponents.projectProperty import DependencyTrackProjectProperty
 from apicomponents.vulnerability import DependencyTrackVulnerability
 from apicomponents.finding import DependencyTrackFinding
-from apicomponents.licence import DependencyTrackLicence
+from apicomponents.license import DependencyTrackLicense
 from apicomponents.metrics import DependencyTrackMetrics
 from apicomponents.acl import DependencyTrackACL
 from apicomponents.bom import DependencyTrackBom
 from apicomponents.cwe import DependencyTrackCWE
 from apicomponents.configproperty import DependencyTrackConfigProperty
+from apicomponents.calculator import DependencyTrackCalculator
+from apicomponents.team import DependencyTrackTeam
+from apicomponents.permission import DependencyTrackPermission
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicence, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
@@ -31,8 +35,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # TODO: violationanalysis API
 
-# TODO: team API
-
+#// TODO: team API
 # TODO: service API
 
 # TODO: default API
@@ -71,17 +74,17 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # TODO: policyCondition API
 
-# TODO: permission API
+#// TODO: permission API
 
 # TODO: oidc API
 
 # TODO: licenseGroup API
 
-# TODO: ladp API
+# // TODO: ladp API
 
 # TODO: component API
 
-# TODO: calculator API
+# // TODO: calculator API
 
     #TODO improve analysis API and put into apicomponents
 
@@ -105,9 +108,3 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
             return (f"The project, component, or vulnerability could not be found ", response.status_code)
         else:
             return response.status_code
-
-
-dt=DependencyTrackAPI("http://localhost:8081","Z0g4jvxF1Yek3R8balySFj5kGahjR3oj")
-with open("/home/edismail/Desktop/x.json") as f:
-    body=json.load(f)
-print(dt.put_bom("09d3557d-f43c-45a1-923b-fc9cc51392e9",body))
