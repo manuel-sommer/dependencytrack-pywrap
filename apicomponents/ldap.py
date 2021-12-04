@@ -19,7 +19,7 @@ class DependencyTrackLDAP(object):
         if response.status_code == 200:
             return ldaplist
         else:
-            return ((response.content).decode("utf-8"), response.status_code)
+            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
         
     def get_ldapteam(self, uuid):
         """Returns the DNs of all groups mapped to the specified team
@@ -35,7 +35,7 @@ class DependencyTrackLDAP(object):
         elif response.status_code == 404:
             return (f"The UUID of the team could not be found , {response.status_code}")
         else:
-            return ((response.content).decode("utf-8"), response.status_code)
+            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
     
     def create_ldap(self, team, dn):
         """Adds a mapping
@@ -58,7 +58,7 @@ class DependencyTrackLDAP(object):
         elif response.status_code == 409:
             return (f"A mapping with the same team and dn already exists, {response.status_code}")
         else:
-            return ((response.content).decode("utf-8"), response.status_code)
+            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def delete_ldap(self, uuid):
         """
@@ -75,4 +75,4 @@ class DependencyTrackLDAP(object):
         elif response.status_code == 404:
             return (f"The UUID of the mapping could not be found, {response.status_code}")
         else:
-            return ((response.content).decode("utf-8"), response.status_code)
+            return (f"{(response.content).decode('utf-8')}, {response.status_code}")

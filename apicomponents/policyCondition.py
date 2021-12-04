@@ -1,0 +1,2 @@
+class DependencyTrackPolicyconditions(object):
+    pass
