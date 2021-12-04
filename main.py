@@ -2,11 +2,13 @@ import requests
 from apicomponents.analysis import DependencyTrackAnalysis
 from apicomponents.badge import DependencyTrackbadge
 from apicomponents.ldap import DependencyTrackLDAP
+from apicomponents.policy import DependencyTackPolicy
 from apicomponents.project import DependencyTrackProject
 from apicomponents.projectProperty import DependencyTrackProjectProperty
 from apicomponents.repository import DependencyTrackRepository
 from apicomponents.service import DependencyTrackService
 from apicomponents.violation import DependencyTrackViolation
+from apicomponents.violationAnalysis import DependencyTrackViolationAnalysis
 from apicomponents.vulnerability import DependencyTrackVulnerability
 from apicomponents.finding import DependencyTrackFinding
 from apicomponents.license import DependencyTrackLicense
@@ -19,7 +21,7 @@ from apicomponents.calculator import DependencyTrackCalculator
 from apicomponents.team import DependencyTrackTeam
 from apicomponents.permission import DependencyTrackPermission
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
@@ -49,7 +51,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # // TODO: violation API
 
-# TODO: policy API
+# // TODO: policy API
 
 # TODO: policyCondition API
 
