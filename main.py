@@ -2,6 +2,7 @@ import requests
 from apicomponents.analysis import DependencyTrackAnalysis
 from apicomponents.badge import DependencyTrackbadge
 from apicomponents.ldap import DependencyTrackLDAP
+from apicomponents.licensegroup import DependencyTrackLicenseGroup
 from apicomponents.policy import DependencyTackPolicy
 from apicomponents.project import DependencyTrackProject
 from apicomponents.projectProperty import DependencyTrackProjectProperty
@@ -21,7 +22,7 @@ from apicomponents.calculator import DependencyTrackCalculator
 from apicomponents.team import DependencyTrackTeam
 from apicomponents.permission import DependencyTrackPermission
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis,DependencyTrackLicenseGroup):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
@@ -37,7 +38,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # TODO: user API
 
-# TODO: violationanalysis API
+# // TODO: violationanalysis API
 
 #// TODO: team API
 # // TODO: service API
@@ -59,7 +60,7 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
 
 # TODO: oidc API
 
-# TODO: licenseGroup API
+# // TODO: licenseGroup API
 
 # // TODO: ladp API
 
