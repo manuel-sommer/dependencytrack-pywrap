@@ -21,8 +21,9 @@ from apicomponents.configproperty import DependencyTrackConfigProperty
 from apicomponents.calculator import DependencyTrackCalculator
 from apicomponents.team import DependencyTrackTeam
 from apicomponents.permission import DependencyTrackPermission
+from apicomponents.search import DependencyTrackSearch
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis,DependencyTrackLicenseGroup,DependencyTackSearch):
+class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis,DependencyTrackLicenseGroup,DependencyTrackSearch):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
