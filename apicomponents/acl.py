@@ -10,7 +10,7 @@ class DependencyTrackACL(object):
         """
         
         response = self.session.put(
-            self.apicall + "/v1/acl/mappiing", data={"team": team, "project": project})
+            self.apicall + "/v1/acl/mapping", data={"team": team, "project": project})
         
         if response.status_code == 200:
             return response.json()

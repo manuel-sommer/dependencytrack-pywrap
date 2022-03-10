@@ -135,8 +135,32 @@ class DependencyTrackTeam(object):
         if response.status_code == 200:
             return teamlist
         else:
-            return (f"Unable to list projects", response.status_code)
-        
+            return (f"Unable to list teams", response.status_code)
+
+    def get_uuid_from_team_name(self, teamname, pageSize=100):
+        """Returns a list of all teams
+        """
+        teamlist = list()
+        teamuid = None
+        pageNumber = 1
+        response = self.session.get(
+            self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+        for team in range(0, len(response.json())):
+            teamlist.append(response.json()[team-1])
+        while len(response.json()) == pageSize:
+            pageNumber += 1
+            response = self.session.get(
+                self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+            for team in range(0, len(response.json())):
+                teamlist.append(response.json()[team-1])
+        for team in teamlist:
+            if team['name']==teamname:
+                teamuid = team['uuid']
+        if response.status_code == 200:
+            return teamuid
+        else:
+            return (f"Unable to list team", response.status_code)
+
     def delete_apikey(self, apikey):
         """Delete specified API key
 
