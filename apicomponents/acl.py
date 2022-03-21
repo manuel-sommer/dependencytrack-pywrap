@@ -13,7 +13,7 @@ class DependencyTrackACL(object):
             self.apicall + "/v1/acl/mapping",json=data)
 
         if response.status_code == 200:
-            return response.json()
+            return response.status_code
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
