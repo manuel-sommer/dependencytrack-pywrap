@@ -8,10 +8,10 @@ class DependencyTrackACL(object):
             team ([string]): [name of the team]
             project ([string]): [name of the project]
         """
-        
+        data={"team": team, "project": project}
         response = self.session.put(
-            self.apicall + "/v1/acl/mapping", data={"team": team, "project": project})
-        
+            self.apicall + "/v1/acl/mapping",json=data)
+
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -22,7 +22,7 @@ class DependencyTrackACL(object):
             return (f"A mapping with the same team and project already exists, {response.status_code}")
         else:
             return ((response.content).decode("UTF-8"), response.status_code)
-            
+
     def get_acl(self, uuid, excludeInactive=False):
         """[Returns the projects assigned to the specified team]
 
