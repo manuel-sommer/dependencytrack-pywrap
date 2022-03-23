@@ -1,3 +1,5 @@
+import json
+
 class DependencyTrackConfigProperty(object):
     #configProperty API
     
@@ -51,7 +53,7 @@ class DependencyTrackConfigProperty(object):
         else:
             return ((response.content).decode("utf-8"), response.status_code)
     
-    def post_configPropertyAgregate(self, body):
+    def post_configPropertyAggregate(self, groupName = None, propertyName = None, propertyValue=None, propertyType=None, description = None):
         """Update a config property
 
         Args:
@@ -66,9 +68,20 @@ class DependencyTrackConfigProperty(object):
         Returns:
             JSON: Json object which was sent successful
         """
-        data=[body]
+        data = {
+        }
+        if groupName != None:
+            data['groupName'] = groupName
+        if propertyName != None:
+            data['propertyName'] = propertyName
+        if propertyValue != None:
+            data['propertyValue'] = propertyValue
+        if propertyType != None:
+            data['propertyType'] = propertyType
+        if description != None:
+            data['description'] = description
         response = self.session.post(
-            self.apicall + f"/v1/configProperty", data=data)
+            self.apicall + f"/v1/configProperty/aggregate", data=json.dumps([data]))
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
