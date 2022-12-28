@@ -1,5 +1,6 @@
 import json
-class DependencyTrackAnalysis(object):
+
+class Analysis(object):
     
     def get_analysis(self, project, component, vulnerability):
         """Retrieves an analysis trail

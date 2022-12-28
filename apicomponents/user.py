@@ -1,7 +1,7 @@
 import json
 
-class DependencyTrackUser(object):
-    
+class User(object):
+
     def get_user_oidc(self):
         """
         """

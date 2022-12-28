@@ -1,4 +1,4 @@
-class DependencyTrackFinding(object):
+class Finding(object):
 
     def get_project_finding(self, uuid, suppressed=False, pageSize=100):
         """ 

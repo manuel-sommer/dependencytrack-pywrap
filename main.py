@@ -1,30 +1,30 @@
 import requests
-from apicomponents.analysis import DependencyTrackAnalysis
-from apicomponents.badge import DependencyTrackbadge
-from apicomponents.ldap import DependencyTrackLDAP
-from apicomponents.licensegroup import DependencyTrackLicenseGroup
-from apicomponents.policy import DependencyTackPolicy
-from apicomponents.project import DependencyTrackProject
-from apicomponents.projectProperty import DependencyTrackProjectProperty
-from apicomponents.repository import DependencyTrackRepository
-from apicomponents.service import DependencyTrackService
-from apicomponents.violation import DependencyTrackViolation
-from apicomponents.violationAnalysis import DependencyTrackViolationAnalysis
-from apicomponents.vulnerability import DependencyTrackVulnerability
-from apicomponents.finding import DependencyTrackFinding
-from apicomponents.license import DependencyTrackLicense
-from apicomponents.metrics import DependencyTrackMetrics
-from apicomponents.acl import DependencyTrackACL
-from apicomponents.bom import DependencyTrackBom
-from apicomponents.cwe import DependencyTrackCWE
-from apicomponents.configproperty import DependencyTrackConfigProperty
-from apicomponents.calculator import DependencyTrackCalculator
-from apicomponents.team import DependencyTrackTeam
-from apicomponents.permission import DependencyTrackPermission
-from apicomponents.search import DependencyTrackSearch
-from apicomponents.user import DependencyTrackUser
+from apicomponents.analysis import Analysis
+from apicomponents.badge import Badge
+from apicomponents.ldap import LDAP
+from apicomponents.licensegroup import LicenseGroup
+from apicomponents.policy import Policy
+from apicomponents.project import Project
+from apicomponents.projectProperty import ProjectProperty
+from apicomponents.repository import Repository
+from apicomponents.service import Service
+from apicomponents.violation import Violation
+from apicomponents.violationAnalysis import ViolationAnalysis
+from apicomponents.vulnerability import Vulnerability
+from apicomponents.finding import Finding
+from apicomponents.license import License
+from apicomponents.metrics import Metrics
+from apicomponents.acl import ACL
+from apicomponents.bom import Bom
+from apicomponents.cwe import CWE
+from apicomponents.configproperty import ConfigProperty
+from apicomponents.calculator import Calculator
+from apicomponents.team import Team
+from apicomponents.permission import Permission
+from apicomponents.search import Search
+from apicomponents.user import User
 
-class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty, DependencyTrackVulnerability, DependencyTrackFinding, DependencyTrackLicense, DependencyTrackMetrics, DependencyTrackACL, DependencyTrackBom, DependencyTrackCWE, DependencyTrackConfigProperty, DependencyTrackbadge, DependencyTrackCalculator, DependencyTrackTeam, DependencyTrackPermission, DependencyTrackLDAP, DependencyTrackService, DependencyTrackViolation, DependencyTrackRepository,DependencyTrackAnalysis, DependencyTackPolicy, DependencyTrackViolationAnalysis,DependencyTrackLicenseGroup,DependencyTrackSearch,DependencyTrackUser):
+class DependencyTrackAPI(Project, ProjectProperty, Vulnerability, Finding, License, Metrics, ACL, Bom, CWE, ConfigProperty, Badge, Calculator, Team, Permission, LDAP, Service, Violation, Repository,Analysis, Policy, ViolationAnalysis,LicenseGroup,Search,User):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey
@@ -37,37 +37,21 @@ class DependencyTrackAPI(DependencyTrackProject, DependencyTrackProjectProperty,
         response = self.session.get(self.apicall + "/version")
         return response.json()
 
-
 # TODO: user API
-
-# // TODO: violationanalysis API
-
-#// TODO: team API
-# // TODO: service API
-#  TODO: improve service API
-
+# TODO: violationanalysis API
+# TODO: team API
+# TODO: service API
+# TODO: improve service API
 # TODO: default API
-
-# // TODO: search API
-
-# // TODO advance Repository API and put into apicomponents
-
-# // TODO: violation API
-
-# // TODO: policy API
-
+# TODO: search API
+# TODO: advance Repository API and put into apicomponents
+# TODO: violation API
+# TODO: policy API
 # TODO: policyCondition API
-
-#// TODO: permission API
-
+# TODO: permission API
 # TODO: oidc API
-
-# // TODO: licenseGroup API
-
-# // TODO: ladp API
-
+# TODO: licenseGroup API
+# TODO: ladp API
 # TODO: component API
-
-# // TODO: calculator API
-
-# // TODO improve analysis API and put into apicomponents
+# TODO: calculator API
+# TODO: improve analysis API and put into apicomponents

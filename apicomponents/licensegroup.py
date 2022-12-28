@@ -1,5 +1,6 @@
 import json
-class DependencyTrackLicenseGroup(object):
+
+class LicenseGroup(object):
     
     def list_licensegroups(self, pageSize=100):
         grouplist = list()
@@ -20,9 +21,8 @@ class DependencyTrackLicenseGroup(object):
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def get_licensegroup(self, uuid):
-        
         response = self.session.get(self.apicall + f"/v1/licenseGroup/{uuid}")
         if response.status_code == 200:
             return response.json()

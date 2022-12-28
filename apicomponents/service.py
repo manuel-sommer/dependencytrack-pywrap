@@ -1,5 +1,6 @@
 import json
-class DependencyTrackService(object):
+
+class Service(object):
 
     def list_services(self, uuid, pageSize=100):
         """Returns a list of all services for a given project

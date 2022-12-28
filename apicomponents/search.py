@@ -1,5 +1,5 @@
-class DependencyTrackSearch(object):
-    
+class Search(object):
+
     def general_search(self,query=None):
         if query:
             response= self.session.get(self.apicall + "/v1/search", params={'query':query})

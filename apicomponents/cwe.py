@@ -1,5 +1,4 @@
-class DependencyTrackCWE(object):
-    #cwe API
+class CWE(object):
 
     def get_cwe(self, pageSize=100):
         """Returns a list of all CWEs

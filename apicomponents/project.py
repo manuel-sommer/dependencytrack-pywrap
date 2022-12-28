@@ -1,4 +1,4 @@
-class DependencyTrackProject(object):
+class Project(object):
     def list_projects(self, pageSize=100):
         projectlist = list()
         pageNumber = 1

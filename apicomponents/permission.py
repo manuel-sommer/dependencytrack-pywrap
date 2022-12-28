@@ -1,6 +1,5 @@
-class DependencyTrackPermission(object):
+class Permission(object):
 
-    
     def list_permissions(self, pageSize=100):
         """
         Returns a list of all permissions
@@ -19,7 +18,7 @@ class DependencyTrackPermission(object):
             return permissionlist
         else:
             return (f"Unable to list permissions, {response.status_code}")
-    
+
     def add_userpermission(self, permission, username):
         """Adds the permission to the specified username.
 

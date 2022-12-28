@@ -1,5 +1,6 @@
 import json
-class DependencyTrackRepository(object):
+
+class Repository(object):
     
     def list_repository(self, pageSize=100):
         """Returns a list of all repositories

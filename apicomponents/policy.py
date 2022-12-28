@@ -1,5 +1,5 @@
 import json
-class DependencyTackPolicy(object):
+class Policy(object):
 
     def get_policy(self, uuid):
         """Returns a specific policy

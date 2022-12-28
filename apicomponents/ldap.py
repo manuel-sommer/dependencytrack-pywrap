@@ -1,5 +1,6 @@
 import json
-class DependencyTrackLDAP(object):
+
+class LDAP(object):
     
     def list_ldapgroups(self, pageSize=100):
         """

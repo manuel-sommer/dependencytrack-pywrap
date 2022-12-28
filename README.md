@@ -1,9 +1,11 @@
 # dependencytrack-pywrap
-This is a python wrapper for the dependency track REST API. 
+This is a python wrapper for the DependencyTrack REST API. 
 
 ## Quick Start
 
 ```python
+# Import DependencyTrackAPI and use the right port for apiurl. 
+from main import DependencyTrackAPI
 dta = DependencyTrackAPI(apiurl = 'the api url', apikey = 'see dependency track')
 # Return the Version
 dta.version()

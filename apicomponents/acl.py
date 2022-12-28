@@ -1,5 +1,4 @@
-class DependencyTrackACL(object):
-# acl API
+class ACL(object):
 
     def put_acl(self, team, project):
         """[Adds an ACL mapping]

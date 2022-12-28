@@ -1,5 +1,4 @@
-class DependencyTrackProjectProperty(object):
-    # this section is all about projectProperty
+class ProjectProperty(object):
     def get_projectproperty(self, uuid):
         response = self.session.get(self.apicall + f"/v1/project/{uuid}/property")
         if response.status_code == 200:

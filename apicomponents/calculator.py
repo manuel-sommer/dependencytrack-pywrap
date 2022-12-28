@@ -1,4 +1,4 @@
-class DependencyTrackCalculator(object):
+class Calculator(object):
     
     def get_calculator(self,cvss):
         """

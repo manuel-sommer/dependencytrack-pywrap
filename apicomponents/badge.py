@@ -1,5 +1,4 @@
-class DependencyTrackbadge(object):
-
+class Badge(object):
 
     def get_badgeByname(self, name, version):
         #TODO : follow up on response of this functionality

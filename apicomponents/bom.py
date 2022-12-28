@@ -1,6 +1,6 @@
 import base64,json
-class DependencyTrackBom(object):
-    # bom API
+
+class Bom(object):
     def get_bom_token(self,uuid):
         """
         Determines if there are any tasks associated with the token that are being processed, or in the queue to be processed.

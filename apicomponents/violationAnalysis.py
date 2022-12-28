@@ -1,6 +1,7 @@
 import json
-class DependencyTrackViolationAnalysis(object):
-    
+
+class ViolationAnalysis(object):
+
     def record_violation(self,component,policyViolation,suppressed=True):
         """Record a violation analysis decision
 

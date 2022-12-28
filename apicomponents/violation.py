@@ -1,5 +1,5 @@
-class DependencyTrackViolation(object):
-    
+class Violation(object):
+
     def list_violations(self, suppressed=False, pageSize=100):
         """Returns a list of all policy violations for the entire portfolio
 

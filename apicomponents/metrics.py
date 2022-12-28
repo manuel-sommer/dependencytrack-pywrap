@@ -1,5 +1,4 @@
-class DependencyTrackMetrics(object):
-# Metrics
+class Metrics(object):
 
     def get_all_metrics(self, pageSize=100):
         """

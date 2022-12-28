@@ -1,7 +1,6 @@
 import json
 
-class DependencyTrackConfigProperty(object):
-    #configProperty API
+class ConfigProperty(object):
     
     def get_configProperty(self, pageSize=100):
         """

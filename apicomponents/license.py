@@ -1,5 +1,4 @@
-class DependencyTrackLicense(object):
-    # License
+class License(object):
 
     def get_list_license(self, pageSize=100):
         """Returns a list of all licenses with complete metadata for each license"""

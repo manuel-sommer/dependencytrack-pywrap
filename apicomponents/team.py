@@ -1,6 +1,6 @@
 import json
 
-class DependencyTrackTeam(object):
+class Team(object):
 
     def get_teamByUUID(self, uuid):
         """Returns a specific team
