@@ -20,7 +20,7 @@ class Badge(object):
         elif response.status_code == 404:
             return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
+            return (f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
 
@@ -43,6 +43,6 @@ class Badge(object):
         elif response.status_code == 404:
             return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
+            return (f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)

@@ -6,6 +6,8 @@
 ignore =
     # undefined file name excpetion
     F821
+    # Suppress - line too long (> 79 characters)
+    E501
 
 
 exclude =

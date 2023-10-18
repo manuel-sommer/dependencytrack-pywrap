@@ -1,4 +1,6 @@
-import base64,json
+import base64
+import json
+
 
 class Bom(object):
     def get_bom_token(self, uuid):
