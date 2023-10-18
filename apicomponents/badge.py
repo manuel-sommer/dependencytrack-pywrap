@@ -1,7 +1,7 @@
 class Badge(object):
 
     def get_badgeByname(self, name, version):
-        #TODO : follow up on response of this functionality
+        # TODO : follow up on response of this functionality
         """Returns current metrics for a specific project
 
         Args:
@@ -20,12 +20,12 @@ class Badge(object):
         elif response.status_code == 404:
             return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
+            return (f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
 
     def get_badgeByuuid(self, uuid):
-        #TODO : follow up on response of this functionality
+        # TODO : follow up on response of this functionality
         """Returns current metrics for a specific project
 
         Args:
@@ -43,6 +43,6 @@ class Badge(object):
         elif response.status_code == 404:
             return (f"The project could not be found, {response.status_code}")
         elif response.status_code == 204:
-            return(f"Badge support is disabled. No content will be returned, {response.status_code}")
+            return (f"Badge support is disabled. No content will be returned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)

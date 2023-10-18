@@ -24,7 +24,8 @@ from apicomponents.permission import Permission
 from apicomponents.search import Search
 from apicomponents.user import User
 
-class DependencyTrackAPI(Project, ProjectProperty, Vulnerability, Finding, License, Metrics, ACL, Bom, CWE, ConfigProperty, Badge, Calculator, Team, Permission, LDAP, Service, Violation, Repository,Analysis, Policy, ViolationAnalysis,LicenseGroup,Search,User):
+
+class DependencyTrackAPI(Project, ProjectProperty, Vulnerability, Finding, License, Metrics, ACL, Bom, CWE, ConfigProperty, Badge, Calculator, Team, Permission, LDAP, Service, Violation, Repository, Analysis, Policy, ViolationAnalysis, LicenseGroup, Search, User):
     def __init__(self, apiurl, apikey):
         self.apiurl = apiurl
         self.apikey = apikey

@@ -1,15 +1,15 @@
-import base64,json
+import base64
+import json
+
 
 class Bom(object):
-    def get_bom_token(self,uuid):
-        """
-        Determines if there are any tasks associated with the token that are being processed, or in the queue to be processed.
+    def get_bom_token(self, uuid):
+        """ Determines if there are any tasks associated with the token that are being processed, or in the queue to be processed.
         This endpoint is intended to be used in conjunction with uploading a supported BOM document. Upon upload, a token will be returned. The token can then be queried using this endpoint to determine if any tasks (such as vulnerability analysis) is being performed on the BOM. A value of true indicates processing is occurring. A value of false indicates that no processing is occurring for the specified token. However, a value of false also does not confirm the token is valid, only that no processing is associated with the specified token.
 
 
         Args:
-            uuid (string): The UUID of the token to query
-        """
+            uuid (string): The UUID of the token to query """
         response = self.session.get(self.apicall + f"/v1/bom/token/{uuid}")
         if response.status_code == 200:
             return response.json()
@@ -18,7 +18,7 @@ class Bom(object):
         else:
             return response.status_code
     
-    def get_bom_project(self,uuid,format="json"):
+    def get_bom_project(self, uuid, format="json"):
         """Returns dependency metadata for a project in CycloneDX format
 
         Args:
@@ -26,8 +26,7 @@ class Bom(object):
             format (str, optional): . Defaults to "json". However by default API is xml
 
         Returns:
-            xml or json: returns dependency metadata for a project in CycloneDX format in xml or json
-        """
+            xml or json: returns dependency metadata for a project in CycloneDX format in xml or json """
         response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/project/{uuid}",params={"format":format})
         if response.status_code == 200:
             return response.json()
@@ -40,7 +39,7 @@ class Bom(object):
         else:
             return ((response.content).decode("utf-8"), response.status_code)
     
-    def get_bom_component(self,uuid,format="json"):
+    def get_bom_component(self, uuid, format="json"):
         """Returns dependency metadata for a component in CycloneDX format
 
         Args:
@@ -48,8 +47,7 @@ class Bom(object):
             format (str, optional): . Defaults to "json". However by default API is xml
 
         Returns:
-            xml or json: returns dependency metadata for a component in CycloneDX format in xml or json
-        """
+            xml or json: returns dependency metadata for a component in CycloneDX format in xml or json """
         response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/component/{uuid}",params={"format":format})
         if response.status_code == 200:
             return response.json()
@@ -74,17 +72,16 @@ class Bom(object):
             autoCreate (bool, optional): create project if it does not exist", response". Defaults to True.
 
         Returns:
-            response status code
-        """
+            response status code """
         data=dict()
         data["project"] = project
         data["projectName"] = projectName
         data["projectVersion"] = projectVersion
         data["body"] =body
         data["autoCreate"] = autoCreate
-        response = self.session.post(self.apicall + f"/v1/bom", files=body)
+        response = self.session.post(self.apicall + "/v1/bom", files=body)
         if response.status_code == 200:
-            return (f"successful operation")
+            return ("successful operation")
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
@@ -110,9 +107,9 @@ class Bom(object):
         data["bom"]=base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
         print(json.dumps(data))
         response = self.session.put(
-            self.apicall + f"/v1/bom", data=json.dumps(data))
+            self.apicall + "/v1/bom", data=json.dumps(data))
         if response.status_code == 200:
-            return (f"successful operation")
+            return ("successful operation")
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 403:
