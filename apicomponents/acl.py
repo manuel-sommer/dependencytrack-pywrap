@@ -14,14 +14,17 @@ class ACL(object):
         if response.status_code == 200:
             return response.status_code
         elif response.status_code == 401:
-            return (f"Unauthorized,
-                    {response.status_code}")
+            return (f"Unauthorized, {
+                response.status_code
+                }")
         elif response.status_code == 404:
-            return (f"The UUID of the team or project could not be found, 
-                    {response.status_code}")
+            return (f"The UUID of the team or project could not be found, {
+                response.status_code
+                }")
         elif response.status_code == 409:
-            return (f"A mapping with the same team and project already exists,
-                    {response.status_code}")
+            return (f"A mapping with the same team and project already exists, {
+                response.status_code
+                }")
         else:
             return ((response.content).decode("UTF-8"),
                     response.status_code)

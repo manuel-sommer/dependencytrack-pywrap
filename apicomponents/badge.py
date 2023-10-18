@@ -1,7 +1,7 @@
 class Badge(object):
 
     def get_badgeByname(self, name, version):
-        #TODO : follow up on response of this functionality
+        # TODO : follow up on response of this functionality
         """Returns current metrics for a specific project
 
         Args:
@@ -25,7 +25,7 @@ class Badge(object):
             return ((response.content).decode("utf-8"), response.status_code)
 
     def get_badgeByuuid(self, uuid):
-        #TODO : follow up on response of this functionality
+        # TODO : follow up on response of this functionality
         """Returns current metrics for a specific project
 
         Args:
