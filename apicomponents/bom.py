@@ -17,7 +17,7 @@ class Bom(object):
             return (f"Unauthorized, {response.status_code}")
         else:
             return response.status_code
-    
+
     def get_bom_project(self, uuid, format="json"):
         """Returns dependency metadata for a project in CycloneDX format
 
@@ -27,7 +27,7 @@ class Bom(object):
 
         Returns:
             xml or json: returns dependency metadata for a project in CycloneDX format in xml or json """
-        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/project/{uuid}",params={"format":format})
+        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/project/{uuid}", params={"format": format})
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -38,7 +38,7 @@ class Bom(object):
             return (f"Project not found, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-    
+
     def get_bom_component(self, uuid, format="json"):
         """Returns dependency metadata for a component in CycloneDX format
 
@@ -48,7 +48,7 @@ class Bom(object):
 
         Returns:
             xml or json: returns dependency metadata for a component in CycloneDX format in xml or json """
-        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/component/{uuid}",params={"format":format})
+        response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/component/{uuid}", params={"format": format})
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -59,9 +59,9 @@ class Bom(object):
             return (f"Component not found, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-    
+
     def post_bom(self, project, projectName, projectVersion, body, autoCreate=True):
-        #TODO: refactor for formdata
+        # TODO: refactor for formdata
         """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
 
         Args:
@@ -73,11 +73,11 @@ class Bom(object):
 
         Returns:
             response status code """
-        data=dict()
+        data = dict()
         data["project"] = project
         data["projectName"] = projectName
         data["projectVersion"] = projectVersion
-        data["body"] =body
+        data["body"] = body
         data["autoCreate"] = autoCreate
         response = self.session.post(self.apicall + "/v1/bom", files=body)
         if response.status_code == 200:
@@ -90,7 +90,7 @@ class Bom(object):
             return (f"Project not found, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-        
+
     def put_bom(self, project, body):
         """Upload a supported bill of material format document. Expects CycloneDX along and a valid project UUID. If a UUID is not specified then the projectName and projectVersion must be specified. Optionally, if autoCreate is specified and ‘true’ and the project does not exist, the project will be created. In this scenario, the principal making the request will additionally need the PORTFOLIO_MANAGEMENT or PROJECT_CREATION_UPLOAD permission.
 
@@ -102,9 +102,9 @@ class Bom(object):
         Returns:
             response status code
         """
-        data=dict()
-        data["project"]=project
-        data["bom"]=base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
+        data = dict()
+        data["project"] = project
+        data["bom"] = base64.b64encode(json.dumps(body).encode("utf-8")).decode("utf-8")
         print(json.dumps(data))
         response = self.session.put(
             self.apicall + "/v1/bom", data=json.dumps(data))

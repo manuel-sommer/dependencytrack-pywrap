@@ -5,19 +5,19 @@ class License(object):
         license_list = list()
         pageNumber = 1
         response = self.session.get(
-            self.apicall + f"/v1/license", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            self.apicall + "/v1/license", params={"pageSize": pageSize, "pageNumber": pageNumber})
         for lice in range(0, len(response.json())):
-            license_list.append(response.json()[lice-1])
+            license_list.append(response.json()[lice - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(
-                self.apicall + f"/v1/license", params={"pageSize": pageSize, "pageNumber": pageNumber})
+                self.apicall + "/v1/license", params={"pageSize": pageSize, "pageNumber": pageNumber})
             for lice in range(0, len(response.json())):
-                license_list.append(response.json()[lice-1])
+                license_list.append(response.json()[lice - 1])
         if response.status_code == 200:
             return license_list
         else:
-            return (f"Unauthorized ", response.status_code)
+            return ("Unauthorized ", response.status_code)
 
     def get_license(self, licenseId):
         """
@@ -28,9 +28,9 @@ class License(object):
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
-            return (f"Unauthorized ", response.status_code)
+            return ("Unauthorized ", response.status_code)
         elif response.status_code == 404:
-            return(f"The license could not be found ", response.status_code)
+            return ("The license could not be found", response.status_code)
         else:
             return response.status_code
 
@@ -39,15 +39,15 @@ class License(object):
         license_list = list()
         pageNumber = 1
         response = self.session.get(
-            self.apicall + f"/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            self.apicall + "/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
         for lice in range(0, len(response.json())):
-            license_list.append(response.json()[lice-1])
+            license_list.append(response.json()[lice - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(
-                self.apicall + f"/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
+                self.apicall + "/v1/license/concise", params={"pageSize": pageSize, "pageNumber": pageNumber})
             for lice in range(0, len(response.json())):
-                license_list.append(response.json()[lice-1])
+                license_list.append(response.json()[lice - 1])
         if response.status_code == 200:
             return license_list
         elif response.status_code == 401:
