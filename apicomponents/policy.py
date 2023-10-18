@@ -1,4 +1,6 @@
 import json
+
+
 class Policy(object):
 
     def get_policy(self, uuid):
@@ -32,13 +34,13 @@ class Policy(object):
         response = self.session.get(
             self.apicall + "/v1/policy", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for policy in range(0, len(response.json())):
-            policylist.append(response.json()[policy-1])
+            policylist.append(response.json()[policy - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(
                 self.apicall + "/v1/policy", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for policy in range(0, len(response.json())):
-                policylist.append(response.json()[policy-1])
+                policylist.append(response.json()[policy - 1])
         if response.status_code == 200:
             return policylist
         elif response.status_code == 401:
@@ -85,23 +87,23 @@ class Policy(object):
             else:
                 return "Error! The policyCondition should be a list"
         if projects:
-                if isinstance(projects, list):
-                    data["projects"] = projects
-                else:
-                    return "Error! The projects should be a list"
+            if isinstance(projects, list):
+                data["projects"] = projects
+            else:
+                return "Error! The projects should be a list"
         if globals:
             data["globals"] = globals
         response = self.session.put(
-            self.apicall + f"/v1/policy", data=json.dumps(data))
+            self.apicall + "/v1/policy", data=json.dumps(data))
         if response.status_code == 201:
             return response.json()
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
-    def update_policy(self,uuid ,name=None, operator=None, violationState=None, policyCondition=None, projects=None, globals=None):
-            # TODO: create better comments explaining the args
+
+    def update_policy(self, uuid, name=None, operator=None, violationState=None, policyCondition=None, projects=None, globals=None):
+        # TODO: create better comments explaining the args
         """ Create a policy
 
         Args:
@@ -113,7 +115,7 @@ class Policy(object):
             globals ([type], optional): [description]. Defaults to None.
 
         """
-        data ={"uuid":uuid}
+        data = {"uuid": uuid}
         if name:
             data['name'] = name
         if violationState:
@@ -125,14 +127,14 @@ class Policy(object):
                 data["policyCondition"] = policyCondition
             else:
                 return "Error! The policyCondition should be a list"
-        if projects :
+        if projects:
             if isinstance(projects, list):
-                    data["projects"] = projects
+                data["projects"] = projects
             else:
                 return "Error! The projects should be a list"
         if globals:
             data["globals"] = globals
-        response = self.session.post(self.apicall + f"/v1/policy", data=json.dumps(data))
+        response = self.session.post(self.apicall + "/v1/policy", data=json.dumps(data))
         if response.status_code == 200:
             return ("Successful operation")
         elif response.status_code == 401:
@@ -149,14 +151,14 @@ class Policy(object):
         """
         response = self.session.post(self.apicall + f"/v1/policy/{policyUuid}/projects/{projectUuid}")
         if response.status_code == 200:
-            return (f"Successful operation")
+            return ("Successful operation")
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 304:
             return (f"The policy already has the specified project assigned, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-    
+
     def delete_policyFromproject(self, policyUuid, projectUuid):
         """Removes a project from a policy.
 
@@ -164,9 +166,9 @@ class Policy(object):
             policyUuid (string): The UUID of the policy
             projectUuid (string): The UUID of the project
         """
-        response=self.session.delete(self.apicall + f"/v1/policy/{policyUuid}/projects/{projectUuid}")
+        response = self.session.delete(self.apicall + f"/v1/policy/{policyUuid}/projects/{projectUuid}")
         if response.status_code == 200:
-            return (f"Successful operation")
+            return ("Successful operation")
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 304:

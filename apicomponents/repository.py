@@ -1,7 +1,8 @@
 import json
 
+
 class Repository(object):
-    
+
     def list_repository(self, pageSize=100):
         """Returns a list of all repositories
 
@@ -13,19 +14,19 @@ class Repository(object):
         """
         respositorylist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + f"/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+        response = self.session.get(self.apicall + "/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for repository in range(0, len(response.json())):
-            respositorylist.append(response.json()[repository-1])
+            respositorylist.append(response.json()[repository - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + f"/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
+            response = self.session.get(self.apicall + "/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for repository in range(0, len(response.json())):
-                respositorylist.append(response.json()[repository-1])
+                respositorylist.append(response.json()[repository - 1])
         if response.status_code == 200:
             return respositorylist
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def update_repository(self, uuid, identifier, type, url, resolutionOrder=0, enable=True, internal=True):
         """Update a specific repository
 
@@ -58,12 +59,12 @@ class Repository(object):
             "internal": internal,
             "identifier": identifier
         }
-        response = self.session.post(self.apicall + f"/v1/repository",data=json.dumps(data))
+        response = self.session.post(self.apicall + "/v1/repository", data=json.dumps(data))
         if response.status_code == 200:
             return ("Successful operation")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def create_repository(self, identifier, type, url, resolutionOrder=0, enable=True, internal=True):
         """ Create a new repository
 
@@ -94,13 +95,13 @@ class Repository(object):
             "internal": internal,
             "identifier": identifier
         }
-        response = self.session.put(self.apicall + f"/v1/repository", data=json.dumps(data))
+        response = self.session.put(self.apicall + "/v1/repository", data=json.dumps(data))
         if response.status_code == 201:
             return ("Successful operation")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
-    def get_latest_repository(self,purl):
+
+    def get_latest_repository(self, purl):
         """Attempts to resolve the latest version of the component available in the configured repositories
 
         Args:
@@ -116,18 +117,18 @@ class Repository(object):
                             "lastCheck": "2021-12-02T16:50:56.704Z"
                             }
         """
-        response = self.session.get(self.apicall + f"/v1/repository/latest", params={'purl':purl})
-        if response.status_code==200:
+        response = self.session.get(self.apicall + "/v1/repository/latest", params={'purl': purl})
+        if response.status_code == 200:
             return response.json()
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
-    def get_repositoryByType(self,type, pageSize=100):
+    def get_repositoryByType(self, type, pageSize=100):
         """
             Returns repositories that support the specific type
 
         Args:
-            type (string): The type of repositories to retrieve. eg MAVEN, NPM, GEM, PYPI, NUGET, HEX, COMPOSER, CARGO, GO_MODULES, UNSUPPORTED  
+            type (string): The type of repositories to retrieve. eg MAVEN, NPM, GEM, PYPI, NUGET, HEX, COMPOSER, CARGO, GO_MODULES, UNSUPPORTED
             pageSize (int, optional): [description]. Defaults to 100.
 
         Returns:
@@ -137,17 +138,17 @@ class Repository(object):
         pageNumber = 1
         response = self.session.get(self.apicall + f"/v1/repository/{type}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for repository in range(0, len(response.json())):
-            respositorylist.append(response.json()[repository-1])
+            respositorylist.append(response.json()[repository - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + f"/v1/repository/{type}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for repository in range(0, len(response.json())):
-                respositorylist.append(response.json()[repository-1])
+                respositorylist.append(response.json()[repository - 1])
         if response.status_code == 200:
             return respositorylist
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def delete_repository(self, uuid):
         """Deletes a repository
 

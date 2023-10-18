@@ -1,11 +1,12 @@
 import json
 
+
 class User(object):
 
     def get_user_oidc(self):
         """
         """
-        response = self.session.get(self.apicall + f"/v1/user/oidc") #Retuns a list of all OIDC users
+        response = self.session.get(self.apicall + "/v1/user/oidc")  # Retuns a list of all OIDC users
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -16,7 +17,7 @@ class User(object):
     def join_team(self, username, uuid):
         """
         Adds a user to a team.
-        
+
         Args:
             uuid (string): The uuid of the team.
             username (string): A valid username.
@@ -32,6 +33,6 @@ class User(object):
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
-            return (f"User or team could not be found, {response.status_code}")    
+            return (f"User or team could not be found, {response.status_code}")
 
-#TODO extend
+# TODO extend

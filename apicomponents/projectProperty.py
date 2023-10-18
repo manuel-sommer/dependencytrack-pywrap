@@ -25,7 +25,7 @@ class ProjectProperty(object):
         else:
             return (f"Unable to update the project, {response.status_code}")
 
-    def create_projectproperty(self, uuid,  propertyValue, groupName="integrations", propertyName="defectdojo.engagementId", propertyType="STRING", description="DefectDojo integration"):
+    def create_projectproperty(self, uuid, propertyValue, groupName="integrations", propertyName="defectdojo.engagementId", propertyType="STRING", description="DefectDojo integration"):
         """
         name, classifier and more args to be added
         Args:
@@ -55,7 +55,7 @@ class ProjectProperty(object):
             return (f"Project with specified name already exists, {response.status_code}")
         else:
             return (f"Unable to create the project, {response.status_code}")
-    
+
     def delete_projectproperty_uuid(self, uuid):
         response = self.session.delete(self.apicall + f"/v1/project/{uuid}/property")
         if response.status_code == 204:

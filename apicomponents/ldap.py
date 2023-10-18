@@ -1,7 +1,8 @@
 import json
 
+
 class LDAP(object):
-    
+
     def list_ldapgroups(self, pageSize=100):
         """
         This API performs a pass-thru query to the configured LDAP server. Search criteria results are cached using default Alpine CacheManager policy.
@@ -11,17 +12,17 @@ class LDAP(object):
         pageNumber = 1
         response = self.session.get(self.apicall + "/v1/ldap/groups", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for ldap in range(0, len(response.json())):
-            ldaplist.append(response.json()[ldap-1])
+            ldaplist.append(response.json()[ldap - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + "/v1/ldap/groups", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for ldap in range(0, len(response.json())):
-                ldaplist.append(response.json()[ldap-1])
+                ldaplist.append(response.json()[ldap - 1])
         if response.status_code == 200:
             return ldaplist
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def get_ldapteam(self, uuid):
         """Returns the DNs of all groups mapped to the specified team
 
@@ -37,19 +38,19 @@ class LDAP(object):
             return (f"The UUID of the team could not be found , {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-    
+
     def create_ldap(self, team, dn):
         """Adds a mapping
 
         Args:
             team (string): The UUID of the team
-            dn (string): DNs 
+            dn (string): DNs
         """
-        data={
+        data = {
             "team": team,
             "dn": dn
         }
-        response = self.session.put(self.apicall + "/v1/ldap/mapping",data=json.dumps(data))
+        response = self.session.put(self.apicall + "/v1/ldap/mapping", data=json.dumps(data))
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:

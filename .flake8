@@ -8,6 +8,8 @@ ignore =
     F821
     # Suppress - line too long (> 79 characters)
     E501
+    # Suppress - Function is too complex
+    C901
 
 
 exclude =

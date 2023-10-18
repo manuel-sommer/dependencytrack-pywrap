@@ -8,12 +8,12 @@ class Permission(object):
         pageNumber = 1
         response = self.session.get(self.apicall + "/v1/permission", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for permission in range(0, len(response.json())):
-            permissionlist.append(response.json()[permission-1])
+            permissionlist.append(response.json()[permission - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + "/v1/permission", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for permission in range(0, len(response.json())):
-                permissionlist.append(response.json()[permission-1])
+                permissionlist.append(response.json()[permission - 1])
         if response.status_code == 200:
             return permissionlist
         else:
@@ -37,7 +37,7 @@ class Permission(object):
             return ("The user already has the specified permission assigned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-        
+
     def delete_userpermission(self, permission, username):
         """Removes the permission to the specified username.
 
@@ -56,7 +56,7 @@ class Permission(object):
             return ("The user already has the specified permission assigned, {response.status_code}")
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-        
+
     def add_teampermission(self, permission, uuid):
         """Adds the permission to the specified username.
 
@@ -76,21 +76,22 @@ class Permission(object):
         else:
             return ((response.content).decode("utf-8"), response.status_code)
 
-    def delete_userpermission(self, permission, uuid):
-        """Removes the permission to the specified team.
-
-        Args:
-            permission (string): A valid permission.
-            uuid (string): A valid team uuid.
-        """
-        response = self.session.delete(self.apicall + f"/v1/permission/{permission}/team/{uuid}")
-        if response.status_code == 200:
-            return response.json()
-        elif response.status_code == 401:
-            return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 404:
-            return (f" The user could not be found, {response.status_code}")
-        elif response.status_code == 304:
-            return ("The user already has the specified permission assigned, {response.status_code}")
-        else:
-            return ((response.content).decode("utf-8"), response.status_code)
+# duplicate
+#    def delete_userpermission(self, permission, uuid):
+#        """Removes the permission to the specified team.
+#
+#        Args:
+#            permission (string): A valid permission.
+#            uuid (string): A valid team uuid.
+#        """
+#        response = self.session.delete(self.apicall + f"/v1/permission/{permission}/team/{uuid}")
+#        if response.status_code == 200:
+#            return response.json()
+#        elif response.status_code == 401:
+#            return (f"Unauthorized, {response.status_code}")
+#        elif response.status_code == 404:
+#            return (f" The user could not be found, {response.status_code}")
+#        elif response.status_code == 304:
+#            return ("The user already has the specified permission assigned, {response.status_code}")
+#        else:
+#            return ((response.content).decode("utf-8"), response.status_code)
