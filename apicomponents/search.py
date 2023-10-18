@@ -1,10 +1,10 @@
 class Search(object):
 
-    def general_search(self,query=None):
+    def general_search(self, query=None):
         if query:
-            response= self.session.get(self.apicall + "/v1/search", params={'query':query})
+            response = self.session.get(self.apicall + "/v1/search", params={'query': query})
         else:
-            response= self.session.get(self.apicall + "/v1/search")
+            response = self.session.get(self.apicall + "/v1/search")
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -12,18 +12,18 @@ class Search(object):
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
-    def project_search(self,query=None):
+    def project_search(self, query=None):
         if query:
-            response= self.session.get(self.apicall + "/v1/search/project", params={'query':query})
+            response = self.session.get(self.apicall + "/v1/search/project", params={'query': query})
         else:
-            response= self.session.get(self.apicall + "/v1/search/project")
+            response = self.session.get(self.apicall + "/v1/search/project")
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-    
+
     def component_search(self, query=None):
         if query:
             response = self.session.get(self.apicall + "/v1/search/component", params={'query': query})
@@ -35,7 +35,7 @@ class Search(object):
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def service_search(self, query=None):
         if query:
             response = self.session.get(self.apicall + "/v1/search/service", params={'query': query})
@@ -47,7 +47,7 @@ class Search(object):
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-        
+
     def license_search(self, query=None):
         if query:
             response = self.session.get(self.apicall + "/v1/search/license", params={'query': query})
@@ -59,7 +59,7 @@ class Search(object):
             return (f"Unauthorized, {response.status_code}")
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
-    
+
     def vulnerability_search(self, query=None):
         if query:
             response = self.session.get(self.apicall + "/v1/search/vulnerability", params={'query': query})

@@ -12,16 +12,16 @@ class Violation(object):
         """
         violationlist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + f"/v1/violation", params={
-                                    'pageSize': pageSize, 'pageNumber': pageNumber,'suppressed': suppressed})
+        response = self.session.get(self.apicall + "/v1/violation", params={
+                                    'pageSize': pageSize, 'pageNumber': pageNumber, 'suppressed': suppressed})
         for violation in range(0, len(response.json())):
-                violationlist.append(response.json()[violation-1])
+            violationlist.append(response.json()[violation - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + f"/v1/violation", params={
+            response = self.session.get(self.apicall + "/v1/violation", params={
                 'pageSize': pageSize, 'pageNumber': pageNumber, 'suppressed': suppressed})
             for violation in range(0, len(response.json())):
-                violationlist.append(response.json()[violation-1])
+                violationlist.append(response.json()[violation - 1])
         if response.status_code == 200:
             return violationlist
         else:
@@ -42,7 +42,7 @@ class Violation(object):
             return response.json()
         else:
             return ((response.content).decode("utf-8"), response.status_code)
-    
+
     def get_component_violation(self, uuid, suppressed=False):
         """Returns a list of all policy violations for a specific component
 

@@ -1,5 +1,6 @@
 import json
 
+
 class Team(object):
 
     def get_teamByUUID(self, uuid):
@@ -50,7 +51,7 @@ class Team(object):
         response = self.session.delete(
             self.apicall + "/v1/team", data=json.dumps(data))
         if response.status_code == 204:
-            return (f"Successfully operation")
+            return ("Successfully operation")
         elif response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
         elif response.status_code == 404:
@@ -125,17 +126,17 @@ class Team(object):
         response = self.session.get(
             self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for team in range(0, len(response.json())):
-            teamlist.append(response.json()[team-1])
+            teamlist.append(response.json()[team - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(
                 self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for team in range(0, len(response.json())):
-                teamlist.append(response.json()[team-1])
+                teamlist.append(response.json()[team - 1])
         if response.status_code == 200:
             return teamlist
         else:
-            return (f"Unable to list teams", response.status_code)
+            return ("Unable to list teams", response.status_code)
 
     def get_uuid_from_team_name(self, teamname, pageSize=100):
         """Returns a list of all teams
@@ -146,20 +147,20 @@ class Team(object):
         response = self.session.get(
             self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
         for team in range(0, len(response.json())):
-            teamlist.append(response.json()[team-1])
+            teamlist.append(response.json()[team - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(
                 self.apicall + "/v1/team", params={'pageSize': pageSize, 'pageNumber': pageNumber})
             for team in range(0, len(response.json())):
-                teamlist.append(response.json()[team-1])
+                teamlist.append(response.json()[team - 1])
         for team in teamlist:
-            if team['name']==teamname:
+            if team['name'] == teamname:
                 teamuid = team['uuid']
         if response.status_code == 200:
             return teamuid
         else:
-            return (f"Unable to list team", response.status_code)
+            return ("Unable to list team", response.status_code)
 
     def delete_apikey(self, apikey):
         """Delete specified API key

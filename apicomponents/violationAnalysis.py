@@ -1,8 +1,9 @@
 import json
 
+
 class ViolationAnalysis(object):
 
-    def record_violation(self,component,policyViolation,suppressed=True):
+    def record_violation(self, component, policyViolation, suppressed=True):
         """Record a violation analysis decision
 
         Args:
@@ -13,12 +14,12 @@ class ViolationAnalysis(object):
         Returns:
             dict: decision
         """
-        data={
-            "component":component,
-            "policyViolation":policyViolation,
-            "suppressed":suppressed
+        data = {
+            "component": component,
+            "policyViolation": policyViolation,
+            "suppressed": suppressed
         }
-        response = self.session.put(self.apicall + f"/v1/violation/analysis",data=json.dumps(data))
+        response = self.session.put(self.apicall + "/v1/violation/analysis", data=json.dumps(data))
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
@@ -26,7 +27,7 @@ class ViolationAnalysis(object):
         else:
             return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
-    def get_violation_analysis(self,component,policyViolation):
+    def get_violation_analysis(self, component, policyViolation):
         """Retrieve a violation analysis trail
 
         Args:
@@ -37,7 +38,7 @@ class ViolationAnalysis(object):
         Returns:
             dict: analysis
         """
-        response = self.session.get(self.apicall + f"/v1/violation/analysis",params={"component": component,"policyViolation":policyViolation})
+        response = self.session.get(self.apicall + "/v1/violation/analysis", params={"component": component, "policyViolation": policyViolation})
         if response.status_code == 200:
             return response.json()
         elif response.status_code == 401:
