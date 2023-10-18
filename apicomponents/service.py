@@ -16,7 +16,7 @@ class Service(object):
         servicelist = list()
         pageNumber = 1
         response = self.session.get(self.apicall + f"/v1/service/project/{uuid}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-        try:
+        if response.status_code == 200:
             for service in range(0, len(response.json())):
                 servicelist.append(response.json()[service - 1])
             while len(response.json()) == pageSize:
@@ -26,7 +26,7 @@ class Service(object):
                     servicelist.append(response.json()[service - 1])
             if response.status_code == 200:
                 return servicelist
-        except:
+        else:
             if response.status_code == 404:
                 return (f"The project could not be found, {response.status_code}")
             elif response.status_code == 403:
