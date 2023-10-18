@@ -13,7 +13,7 @@ class Analysis(object):
 
         Returns:
             json: """
-        response = self.session.get(self.apicall + "/v1/analysis/", params = {"project": project, "component": component, "vulnerability": vulnerability} )
+        response = self.session.get(self.apicall + "/v1/analysis/", params={"project": project, "component": component, "vulnerability": vulnerability})
         if response.status_code == 200:
             return response.json()
         else:
@@ -41,7 +41,7 @@ class Analysis(object):
                     "isSuppressed": true
                     } """
         
-        response = self.session.put(self.apicall + "/v1/analysis/", data=json.dump({"project": project, "component": component, "vulnerability": vulnerability, "suppressed":suppressed}))
+        response = self.session.put(self.apicall + "/v1/analysis/", data=json.dump({"project": project, "component": component, "vulnerability": vulnerability, "suppressed": suppressed}))
         if response.status_code == 200:
             return response.json()
         else:
