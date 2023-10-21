@@ -1,5 +1,5 @@
 # dependencytrack-pywrap
-[Dependency-Track](https://docs.dependencytrack.org/integrations/rest-api/) is a platform to analyse risks in your dependencies.
+[Dependency-Track](https://github.com/DependencyTrack/dependency-track) is a platform to analyse risks in your dependencies.
 This project is a python wrapper for the [Dependency-Track REST API](https://docs.dependencytrack.org/integrations/rest-api/). 
 
 ## Quick Start
