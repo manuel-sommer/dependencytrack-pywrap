@@ -23,3 +23,9 @@ dta.create_project(name="testproject",classifier = "APPLICATION")
 # Update a new project
 dta.update_project(uuid="project_uuid",name="newprojectname")
 ```
+
+## Examples
+This project was tested effectively to use it for:
+- managing (create and remove) projects within DependencyTrack
+- uploading SBOM files to the relevant projects in DependencyTrack
+- adjusting the project's settings in order to sync the discovered findings with [DefectDojo](https://github.com/DefectDojo/django-DefectDojo)
