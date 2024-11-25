@@ -1,7 +1,7 @@
 import json
 
 
-class User(object):
+class User:
 
     def get_user_oidc(self):
         """
@@ -9,9 +9,9 @@ class User(object):
         response = self.session.get(self.apicall + "/v1/user/oidc")  # Retuns a list of all OIDC users
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Could not be found, {response.status_code}")
 
     def join_team(self, username, uuid):
@@ -28,11 +28,11 @@ class User(object):
         response = self.session.post(self.apicall + f"/v1/user/{username}/membership", data=json.dumps(data))
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 304:
+        if response.status_code == 304:
             return (f"The user is already a member of the specified team, {response.status_code}")
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"User or team could not be found, {response.status_code}")
 
 # TODO extend

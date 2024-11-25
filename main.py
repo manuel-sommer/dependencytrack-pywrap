@@ -1,28 +1,29 @@
 import requests
+
+from apicomponents.acl import ACL
 from apicomponents.analysis import Analysis
 from apicomponents.badge import Badge
+from apicomponents.bom import Bom
+from apicomponents.calculator import Calculator
+from apicomponents.configproperty import ConfigProperty
+from apicomponents.cwe import CWE
+from apicomponents.finding import Finding
 from apicomponents.ldap import LDAP
+from apicomponents.license import License
 from apicomponents.licensegroup import LicenseGroup
+from apicomponents.metrics import Metrics
+from apicomponents.permission import Permission
 from apicomponents.policy import Policy
 from apicomponents.project import Project
 from apicomponents.projectProperty import ProjectProperty
 from apicomponents.repository import Repository
+from apicomponents.search import Search
 from apicomponents.service import Service
+from apicomponents.team import Team
+from apicomponents.user import User
 from apicomponents.violation import Violation
 from apicomponents.violationAnalysis import ViolationAnalysis
 from apicomponents.vulnerability import Vulnerability
-from apicomponents.finding import Finding
-from apicomponents.license import License
-from apicomponents.metrics import Metrics
-from apicomponents.acl import ACL
-from apicomponents.bom import Bom
-from apicomponents.cwe import CWE
-from apicomponents.configproperty import ConfigProperty
-from apicomponents.calculator import Calculator
-from apicomponents.team import Team
-from apicomponents.permission import Permission
-from apicomponents.search import Search
-from apicomponents.user import User
 
 
 class DependencyTrackAPI(Project, ProjectProperty, Vulnerability, Finding, License, Metrics, ACL, Bom, CWE, ConfigProperty, Badge, Calculator, Team, Permission, LDAP, Service, Violation, Repository, Analysis, Policy, ViolationAnalysis, LicenseGroup, Search, User):

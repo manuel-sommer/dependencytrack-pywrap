@@ -1,4 +1,4 @@
-class Metrics(object):
+class Metrics:
 
     def get_all_metrics(self, pageSize=100):
         """
@@ -8,18 +8,17 @@ class Metrics(object):
         pageNumber = 1
         response = self.session.get(self.apicall + "/v1/metrics/vulnerability", params={
                                     "pageSize": pageSize, "pageNumber": pageNumber})
-        for metric in range(0, len(response.json())):
+        for metric in range(len(response.json())):
             metrics_list.append(response.json()[metric - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + "/v1/metrics/vulnerability", params={
                                         "pageSize": pageSize, "pageNumber": pageNumber})
-            for metric in range(0, len(response.json())):
+            for metric in range(len(response.json())):
                 metrics_list.append(response.json()[metric - 1])
         if response.status_code == 200:
             return metrics_list
-        else:
-            return (f"Unauthorized, {response.status_code}")
+        return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_portolio_bydate(self, date):
         """
@@ -30,8 +29,7 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/portfolio/since/{date}")
         if response.status_code == 200:
             return response.json()
-        else:
-            return (f"Unauthorized, {response.status_code}")
+        return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_project_bydate(self, uuid, date):
         """
@@ -43,14 +41,13 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/project/{uuid}/since/{date}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 403:
+        if response.status_code == 403:
             return (f"Access to the specified project is forbidden, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Project not found, {response.status_code}")
-        else:
-            return (response.status_code)
+        return (response.status_code)
 
     def get_current_metrics_portfolio(self):
         """
@@ -60,8 +57,7 @@ class Metrics(object):
             self.apicall + "/v1/metrics/portfolio/current")
         if response.status_code == 200:
             return response.json()
-        else:
-            return (f"Unauthorized , {response.status_code}")
+        return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_dayNumber(self, days):
         """
@@ -72,8 +68,7 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/portfolio/{days}/days")
         if response.status_code == 200:
             return response.json()
-        else:
-            return (f"Unauthorized , {response.status_code}")
+        return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_refresh_portfolio(self):
         """
@@ -83,8 +78,7 @@ class Metrics(object):
             self.apicall + "/v1/metrics/portfolio/refresh")
         if response.status_code == 200:
             return (f"successful operation , {response.status_code}")
-        else:
-            return (f"Unauthorized , {response.status_code}")
+        return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_specific_project(self, uuid):
         """
@@ -95,8 +89,7 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/project/{uuid}/current")
         if response.status_code == 200:
             return response.json()
-        else:
-            return (f"Unauthorized , {response.status_code}")
+        return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_specific_project_days(self, uuid, days):
         """
@@ -108,14 +101,13 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/project/{uuid}/days/{days}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 403:
+        if response.status_code == 403:
             return (f"Access to the specified project is forbidden, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Project not found, {response.status_code}")
-        else:
-            return (response.status_code)
+        return (response.status_code)
 
     def get_metrics_refresh_project(self, uuid):
         """
@@ -126,14 +118,13 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/project/{uuid}/refresh")
         if response.status_code == 200:
             return (f"successful operation , {response.status_code}")
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 403:
+        if response.status_code == 403:
             return (f"Access to the specified project is forbidden , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Project not found, {response.status_code}")
-        else:
-            return (response.status_code)
+        return (response.status_code)
 
     def get_current_metrics_component(self, uuid):
         """
@@ -144,14 +135,13 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/component/{uuid}/current")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 403:
+        if response.status_code == 403:
             return (f"Access to the specified project is forbidden , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Project not found, {response.status_code}")
-        else:
-            return (response.status_code)
+        return (response.status_code)
 
     def get_metrics_component_bydate(self, uuid, date, pageSize=100):
         """
@@ -165,18 +155,17 @@ class Metrics(object):
         pageNumber = 1
         response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{date}", params={
                                     "pageSize": pageSize, "pageNumber": pageNumber})
-        for metric in range(0, len(response.json())):
+        for metric in range(len(response.json())):
             metrics_list.append(response.json()[metric - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{date}", params={
                                         "pageSize": pageSize, "pageNumber": pageNumber})
-            for metric in range(0, len(response.json())):
+            for metric in range(len(response.json())):
                 metrics_list.append(response.json()[metric - 1])
         if response.status_code == 200:
             return metrics_list
-        else:
-            return (f"Unauthorized , {response.status_code}")
+        return (f"Unauthorized , {response.status_code}")
 
     def get_metrics_component_bydays(self, uuid, days, pageSize=100):
         """
@@ -190,21 +179,21 @@ class Metrics(object):
         pageNumber = 1
         response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{days}", params={
                                     "pageSize": pageSize, "pageNumber": pageNumber})
-        for metric in range(0, len(response.json())):
+        for metric in range(len(response.json())):
             metrics_list.append(response.json()[metric - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
             response = self.session.get(self.apicall + f"/v1/metrics/component/{uuid}/since/{days}", params={
                                         "pageSize": pageSize, "pageNumber": pageNumber})
-            for metric in range(0, len(response.json())):
+            for metric in range(len(response.json())):
                 metrics_list.append(response.json()[metric - 1])
         if response.status_code == 200:
             return metrics_list
-        else:
-            return (f"Unauthorized, {response.status_code}")
+        return (f"Unauthorized, {response.status_code}")
 
     def get_metrics_component_refresh(self, uuid):
-        """[Requests a refresh of a specific components metrics]
+        """
+        [Requests a refresh of a specific components metrics]
 
         Args:
             uuid ([string]): [The UUID of the component to retrieve metrics for.]
@@ -216,11 +205,10 @@ class Metrics(object):
             self.apicall + f"/v1/metrics/component/{uuid}/refresh")
         if response.status_code == 200:
             return (f"successful operation, {response.status_code}")
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 403:
+        if response.status_code == 403:
             return (f"Access to the specified project is forbidden, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"Project not found, {response.status_code}")
-        else:
-            return (response.status_code)
+        return (response.status_code)

@@ -1,7 +1,7 @@
 import json
 
 
-class LDAP(object):
+class LDAP:
 
     def list_ldapgroups(self, pageSize=100):
         """
@@ -10,21 +10,21 @@ class LDAP(object):
         """
         ldaplist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + "/v1/ldap/groups", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-        for ldap in range(0, len(response.json())):
+        response = self.session.get(self.apicall + "/v1/ldap/groups", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for ldap in range(len(response.json())):
             ldaplist.append(response.json()[ldap - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + "/v1/ldap/groups", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-            for ldap in range(0, len(response.json())):
+            response = self.session.get(self.apicall + "/v1/ldap/groups", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for ldap in range(len(response.json())):
                 ldaplist.append(response.json()[ldap - 1])
         if response.status_code == 200:
             return ldaplist
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def get_ldapteam(self, uuid):
-        """Returns the DNs of all groups mapped to the specified team
+        """
+        Returns the DNs of all groups mapped to the specified team
 
         Args:
             uuid (string): The UUID of the team to retrieve mappings for.
@@ -32,15 +32,15 @@ class LDAP(object):
         response = self.session.get(self.apicall + f"/v1/ldap/team/{uuid}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"The UUID of the team could not be found , {response.status_code}")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def create_ldap(self, team, dn):
-        """Adds a mapping
+        """
+        Adds a mapping
 
         Args:
             team (string): The UUID of the team
@@ -48,19 +48,18 @@ class LDAP(object):
         """
         data = {
             "team": team,
-            "dn": dn
+            "dn": dn,
         }
         response = self.session.put(self.apicall + "/v1/ldap/mapping", data=json.dumps(data))
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"The UUID of the team could not be found, {response.status_code}")
-        elif response.status_code == 409:
+        if response.status_code == 409:
             return (f"A mapping with the same team and dn already exists, {response.status_code}")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def delete_ldap(self, uuid):
         """
@@ -72,9 +71,8 @@ class LDAP(object):
         response = self.session.delete(self.apicall + f"/v1/ldap/mapping/{uuid}")
         if response.status_code == 204:
             return (f"successful operation, {response.status_code}")
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f"The UUID of the mapping could not be found, {response.status_code}")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")

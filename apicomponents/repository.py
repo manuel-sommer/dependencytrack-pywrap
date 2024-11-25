@@ -1,10 +1,11 @@
 import json
 
 
-class Repository(object):
+class Repository:
 
     def list_repository(self, pageSize=100):
-        """Returns a list of all repositories
+        """
+        Returns a list of all repositories
 
         Args:
             pageSize (int, optional): [description]. Defaults to 100.
@@ -14,21 +15,21 @@ class Repository(object):
         """
         respositorylist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + "/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-        for repository in range(0, len(response.json())):
+        response = self.session.get(self.apicall + "/v1/repository", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for repository in range(len(response.json())):
             respositorylist.append(response.json()[repository - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + "/v1/repository", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-            for repository in range(0, len(response.json())):
+            response = self.session.get(self.apicall + "/v1/repository", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for repository in range(len(response.json())):
                 respositorylist.append(response.json()[repository - 1])
         if response.status_code == 200:
             return respositorylist
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def update_repository(self, uuid, identifier, type, url, resolutionOrder=0, enable=True, internal=True):
-        """Update a specific repository
+        """
+        Update a specific repository
 
         Args:
             uuid ([type]): [description]
@@ -57,16 +58,16 @@ class Repository(object):
             "resolutionOder": resolutionOrder,
             "enable": enable,
             "internal": internal,
-            "identifier": identifier
+            "identifier": identifier,
         }
         response = self.session.post(self.apicall + "/v1/repository", data=json.dumps(data))
         if response.status_code == 200:
             return ("Successful operation")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def create_repository(self, identifier, type, url, resolutionOrder=0, enable=True, internal=True):
-        """ Create a new repository
+        """
+        Create a new repository
 
         Args:
             identifier (string): identity name of the repository
@@ -93,16 +94,16 @@ class Repository(object):
             "resolutionOder": resolutionOrder,
             "enable": enable,
             "internal": internal,
-            "identifier": identifier
+            "identifier": identifier,
         }
         response = self.session.put(self.apicall + "/v1/repository", data=json.dumps(data))
         if response.status_code == 201:
             return ("Successful operation")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def get_latest_repository(self, purl):
-        """Attempts to resolve the latest version of the component available in the configured repositories
+        """
+        Attempts to resolve the latest version of the component available in the configured repositories
 
         Args:
             purl (string): The Package URL for the component to query
@@ -117,11 +118,10 @@ class Repository(object):
                             "lastCheck": "2021-12-02T16:50:56.704Z"
                             }
         """
-        response = self.session.get(self.apicall + "/v1/repository/latest", params={'purl': purl})
+        response = self.session.get(self.apicall + "/v1/repository/latest", params={"purl": purl})
         if response.status_code == 200:
             return response.json()
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def get_repositoryByType(self, type, pageSize=100):
         """
@@ -136,21 +136,21 @@ class Repository(object):
         """
         respositorylist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + f"/v1/repository/{type}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-        for repository in range(0, len(response.json())):
+        response = self.session.get(self.apicall + f"/v1/repository/{type}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for repository in range(len(response.json())):
             respositorylist.append(response.json()[repository - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + f"/v1/repository/{type}", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-            for repository in range(0, len(response.json())):
+            response = self.session.get(self.apicall + f"/v1/repository/{type}", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for repository in range(len(response.json())):
                 respositorylist.append(response.json()[repository - 1])
         if response.status_code == 200:
             return respositorylist
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
 
     def delete_repository(self, uuid):
-        """Deletes a repository
+        """
+        Deletes a repository
 
         Args:
             uuid (string): the UUID of the repository to delete
@@ -158,5 +158,4 @@ class Repository(object):
         response = self.session.delete(self.apicall + f"/v1/repository/{uuid}")
         if response.status_code >= 200 or response.status_code <= 299:
             return ("Successful operation")
-        else:
-            return (f"{(response.content).decode('utf-8')}, {response.status_code}")
+        return (f"{(response.content).decode('utf-8')}, {response.status_code}")
