@@ -1,4 +1,4 @@
-class Permission(object):
+class Permission:
 
     def list_permissions(self, pageSize=100):
         """
@@ -6,21 +6,21 @@ class Permission(object):
         """
         permissionlist = list()
         pageNumber = 1
-        response = self.session.get(self.apicall + "/v1/permission", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-        for permission in range(0, len(response.json())):
+        response = self.session.get(self.apicall + "/v1/permission", params={"pageSize": pageSize, "pageNumber": pageNumber})
+        for permission in range(len(response.json())):
             permissionlist.append(response.json()[permission - 1])
         while len(response.json()) == pageSize:
             pageNumber += 1
-            response = self.session.get(self.apicall + "/v1/permission", params={'pageSize': pageSize, 'pageNumber': pageNumber})
-            for permission in range(0, len(response.json())):
+            response = self.session.get(self.apicall + "/v1/permission", params={"pageSize": pageSize, "pageNumber": pageNumber})
+            for permission in range(len(response.json())):
                 permissionlist.append(response.json()[permission - 1])
         if response.status_code == 200:
             return permissionlist
-        else:
-            return (f"Unable to list permissions, {response.status_code}")
+        return (f"Unable to list permissions, {response.status_code}")
 
     def add_userpermission(self, permission, username):
-        """Adds the permission to the specified username.
+        """
+        Adds the permission to the specified username.
 
         Args:
             permission (string): A valid permission.
@@ -29,17 +29,17 @@ class Permission(object):
         response = self.session.post(self.apicall + f"/v1/permission/{permission}/user/{username}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f" The user could not be found , {response.status_code}")
-        elif response.status_code == 304:
+        if response.status_code == 304:
             return ("The user already has the specified permission assigned, {response.status_code}")
-        else:
-            return ((response.content).decode("utf-8"), response.status_code)
+        return ((response.content).decode("utf-8"), response.status_code)
 
     def delete_userpermission(self, permission, username):
-        """Removes the permission to the specified username.
+        """
+        Removes the permission to the specified username.
 
         Args:
             permission (string): A valid permission.
@@ -48,17 +48,17 @@ class Permission(object):
         response = self.session.delete(self.apicall + f"/v1/permission/{permission}/user/{username}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized , {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f" The user could not be found, {response.status_code}")
-        elif response.status_code == 304:
+        if response.status_code == 304:
             return ("The user already has the specified permission assigned, {response.status_code}")
-        else:
-            return ((response.content).decode("utf-8"), response.status_code)
+        return ((response.content).decode("utf-8"), response.status_code)
 
     def add_teampermission(self, permission, uuid):
-        """Adds the permission to the specified username.
+        """
+        Adds the permission to the specified username.
 
         Args:
             permission (string): A valid permission.
@@ -67,14 +67,13 @@ class Permission(object):
         response = self.session.post(self.apicall + f"/v1/permission/{permission}/team/{uuid}")
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        elif response.status_code == 404:
+        if response.status_code == 404:
             return (f" The user could not be found, {response.status_code}")
-        elif response.status_code == 304:
+        if response.status_code == 304:
             return ("The user already has the specified permission assigned, {response.status_code}")
-        else:
-            return ((response.content).decode("utf-8"), response.status_code)
+        return ((response.content).decode("utf-8"), response.status_code)
 
 # duplicate
 #    def delete_userpermission(self, permission, uuid):

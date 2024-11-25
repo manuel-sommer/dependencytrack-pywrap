@@ -1,0 +1,17 @@
+name: Ruff Linter
+
+on: [push, pull_request]
+
+jobs:
+  ruff-linting:
+    runs-on: ubuntu-latest
+    name: Ruff Lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Install Ruff Linter
+        run: pip install -r requirements-lint.txt
+
+      - name: Run Ruff Linter
+        run: ruff check --output-format=github .

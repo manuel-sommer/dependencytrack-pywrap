@@ -1,4 +1,4 @@
-class Calculator(object):
+class Calculator:
 
     def get_calculator(self, cvss):
         """
@@ -10,7 +10,6 @@ class Calculator(object):
         response = self.session.get(self.apicall + "/v1/calculator/cvss", params={"vector": cvss})
         if response.status_code == 200:
             return response.json()
-        elif response.status_code == 401:
+        if response.status_code == 401:
             return (f"Unauthorized, {response.status_code}")
-        else:
-            return ((response.content).decode("UTF-8"), response.status_code)
+        return ((response.content).decode("UTF-8"), response.status_code)
