@@ -12,11 +12,12 @@ class Finding:
                                     "pageSize": pageSize, "pageNumber": pageNumber})
         for finding in range(len(response.json())):
             finding_list.append(response.json()[finding - 1])
-        while len(response.json()) == pageSize:
-            response = self.session.get(self.apicall + f"/v1/finding/project/{uuid}?suppressed={suppressed}", params={
-                                        "pageSize": pageSize, "pageNumber": pageNumber})
-            for finding in range(len(response.json())):
-                finding_list.append(response.json()[finding - 1])
+        # while len(response.json()) == pageSize:
+        #     pageNumber += 1
+        #     response = self.session.get(self.apicall + f"/v1/finding/project/{uuid}?suppressed={suppressed}", params={
+        #                                 "pageSize": pageSize, "pageNumber": pageNumber})
+        #     for finding in range(len(response.json())):
+        #         finding_list.append(response.json()[finding - 1])
         if response.status_code == 200:
             return finding_list
         if response.status_code == 401:
