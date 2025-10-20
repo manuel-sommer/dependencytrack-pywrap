@@ -25,6 +25,7 @@ class Permission:
         Args:
             permission (string): A valid permission.
             username (string): A valid username.
+
         """
         response = self.session.post(self.apicall + f"/v1/permission/{permission}/user/{username}")
         if response.status_code == 200:
@@ -44,6 +45,7 @@ class Permission:
         Args:
             permission (string): A valid permission.
             username (string): A valid username.
+
         """
         response = self.session.delete(self.apicall + f"/v1/permission/{permission}/user/{username}")
         if response.status_code == 200:
@@ -63,6 +65,7 @@ class Permission:
         Args:
             permission (string): A valid permission.
             uuid (string): A valid team uuid.
+
         """
         response = self.session.post(self.apicall + f"/v1/permission/{permission}/team/{uuid}")
         if response.status_code == 200:

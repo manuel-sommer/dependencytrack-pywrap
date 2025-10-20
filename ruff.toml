@@ -1,6 +1,3 @@
-# Always generate Python 3.11-compatible code.
-target-version = "py311"
-
 # Same as Black.
 line-length = 120
 
@@ -32,59 +29,83 @@ exclude = [
 
 [lint]
 select = [
-   "F",
-   "E",
-   "W",
-   "C90",
-   "I",
-   "D3", "D403",
-   "UP",
+   "AIR",
+   "FAST",
    "YTT",
    "ASYNC",
-   "S2", "S5", "S7", "S101", "S112", "S311",
-   "FBT001", "FBT003",
-   "A003", "A004", "A006",
+   "S1", "S2", "S302", "S303", "S304", "S305", "S306", "S307", "S31", "S321", "S323", "S324", "S401", "S402", "S406", "S407", "S408", "S409", "S41", "S5", "S601", "S602", "S604", "S605", "S606", "S607", "S609", "S61", "S7",
+   "FBT",
+   "B00", "B010", "B011", "B012", "B013", "B014", "B015", "B016", "B017", "B018", "B019", "B020", "B021", "B022", "B023", "B025", "B028", "B029", "B03", "B901", "B903", "B905", "B911",
+   "A",
    "COM",
+   "C4",
+   "DTZ003", "DTZ004", "DTZ012", "DTZ901",
    "T10",
-   "DJ003", "DJ012", "DJ013",
+   "DJ003", "DJ01",
    "EM",
    "EXE",
-   "ISC001",
+   "FIX",
+   "FA",
+   "INT",
+   "ISC",
    "ICN",
    "LOG",
-   "G001", "G002", "G1", "G2",
+   "G001", "G002", "G01", "G1", "G2",
+   "INP",
    "PIE",
+   "T20",
+   "PYI",
+   "PT001", "PT002", "PT003", "PT006", "PT007", "PT008", "PT01", "PT020", "PT021", "PT022", "PT023", "PT024", "PT025", "PT026", "PT028", "PT029", "PT03",
    "Q",
    "RSE",
+   "RET",
+   "SIM",
    "SLOT",
    "TID",
-   "TCH",
-   "INT",
+   "TD001", "TD005", "TD007",
+   "TC",
    "ARG003", "ARG004", "ARG005",
-   "PTH2",
-   "TD001", "TD005",
-   "PD",
-   "PGH",
-   "PLE",
-   "PLR0915",
-   "PLW1", "PLW2", "PLW3",
-   "TRY003",
-   "TRY004",
-   "TRY2",
+   "PTH",
    "FLY",
+   "I",
+   "C90",
    "NPY",
-   "FAST",
-   "AIR",
+   "PD",
+   "N804", "N811", "N812", "N813", "N814", "N817", "N818", "N999",
+   "PERF1", "PERF2", "PERF403",
+   "E",
+   "W",
+   "DOC202", "DOC403", "DOC502",
+   "D2", "D3", "D402", "D403", "D405", "D406", "D407", "D408", "D409", "D410", "D411", "D412", "D413", "D414", "D416",
+   "F",
+   "PGH",
+   "PLC0", "PLC1", "PLC24", "PLC28", "PLC3",
+   "PLE",
+   "PLR01", "PLR02", "PLR04", "PLR0915", "PLR1711", "PLR1704", "PLR1714", "PLR1716", "PLR172", "PLR173", "PLR2044", "PLR5", "PLR6104", "PLR6201", 
+   "PLW",
+   "UP",
    "FURB",
+   "RUF",
+   "TRY003", "TRY004", "TRY2", "TRY300", "TRY401",
 ]
 ignore = [
     "E501",
     "E722",
-    "RUF010",
+    "FBT002",
+    "C408",
+    "INP001",
+    "INP001",
+    "SIM108",
+    "RET503",
+    "D200",
+    "A002",
+    "B006",
+    "T201",
+    "RUF002",
     "RUF012",
     "RUF015",
-    "RUF027",
     "D205",
+    "FIX002",
     "D211",  # `one-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible.
     "D212",  # `multi-line-summary-first-line` (D212) and `multi-line-summary-second-line` (D213) are incompatible.
 ]
@@ -93,8 +114,6 @@ ignore = [
 fixable = ["ALL"]
 unfixable = []
 preview = true
-
-per-file-ignores = {}
 
 [lint.flake8-boolean-trap]
 extend-allowed-calls = ["dojo.utils.get_system_setting"]

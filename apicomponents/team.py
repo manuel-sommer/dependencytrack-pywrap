@@ -24,6 +24,7 @@ class Team:
 
         Args:
             uuid (string): The UUID of the team to generate a key for.
+
         """
         response = self.session.put(self.apicall + f"/v1/team/{uuid}/key")
         if response.status_code == 201:
@@ -42,6 +43,7 @@ class Team:
             name (string): name of the team.
             uuid (string): The UUID of the team.
             apikeys (list of dict): API key of the team. [{"key": apikeys}]
+
         """
         data = {
             "name": name,
@@ -166,6 +168,7 @@ class Team:
 
         Args:
             apikey (string): The API key to delete.
+
         """
         response = self.session.delete(self.apicall + f"/v1/team/key/{apikey}")
         if response.status_code == 200:
@@ -181,6 +184,7 @@ class Team:
 
         Args:
             apikey (string): The API key to regenerate.
+
         """
         response = self.session.post(self.apicall + f"/v1/team/key/{apikey}")
         if response.status_code == 200:

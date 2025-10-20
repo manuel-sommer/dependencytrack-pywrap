@@ -6,6 +6,7 @@ class Calculator:
 
         Args:
             cvss (string): A valid CVSSv2 or CVSSv3 vector. Example "CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:H"
+
         """
         response = self.session.get(self.apicall + "/v1/calculator/cvss", params={"vector": cvss})
         if response.status_code == 200:

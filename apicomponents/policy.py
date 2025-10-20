@@ -12,6 +12,7 @@ class Policy:
 
         Returns:
             dictionary: policy
+
         """
         response = self.session.get(self.apicall + f"/v1/policy/{uuid}")
         if response.status_code == 200:
@@ -29,6 +30,7 @@ class Policy:
 
         Returns:
             List: list of all policies
+
         """
         policylist = list()
         pageNumber = 1
@@ -54,6 +56,7 @@ class Policy:
 
         Args:
             uuid (string): The UUID of the policy to delete.
+
         """
         response = self.session.delete(self.apicall + f"/v1/policy/{uuid}")
         if response.status_code >= 200 and response.status_code <= 299:
@@ -77,6 +80,7 @@ class Policy:
 
         Returns:
             [type]: [description]
+
         """
         data = {"name": name,
                 "violationState": violationState}
@@ -149,6 +153,7 @@ class Policy:
         Args:
             policyUuid (string): The UUID of the policy
             projectUuid (string): The UUID of the project
+
         """
         response = self.session.post(self.apicall + f"/v1/policy/{policyUuid}/projects/{projectUuid}")
         if response.status_code == 200:
@@ -166,6 +171,7 @@ class Policy:
         Args:
             policyUuid (string): The UUID of the policy
             projectUuid (string): The UUID of the project
+
         """
         response = self.session.delete(self.apicall + f"/v1/policy/{policyUuid}/projects/{projectUuid}")
         if response.status_code == 200:

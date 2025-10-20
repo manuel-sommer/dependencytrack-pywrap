@@ -14,6 +14,7 @@ class ViolationAnalysis:
 
         Returns:
             dict: decision
+
         """
         data = {
             "component": component,
@@ -38,6 +39,7 @@ class ViolationAnalysis:
 
         Returns:
             dict: analysis
+
         """
         response = self.session.get(self.apicall + "/v1/violation/analysis", params={"component": component, "policyViolation": policyViolation})
         if response.status_code == 200:

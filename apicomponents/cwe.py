@@ -9,6 +9,7 @@ class CWE:
 
         Returns:
             JSON: json object
+
         """
         cwe_list = list()
         pageNumber = 1
@@ -38,6 +39,7 @@ class CWE:
                     "cweId": 0,
                     "name": "string"
                     }
+
         """
         response = self.session.get(self.apicall + f"/v1/cwe/{cweId}")
         if response.status_code == 200:

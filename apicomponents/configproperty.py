@@ -9,6 +9,7 @@ class ConfigProperty:
 
         Returns:
             list: list of all configProperty in json
+
         """
         config_list = list()
         pageNumber = 1
@@ -42,6 +43,7 @@ class ConfigProperty:
 
         Returns:
             JSON: Json object which was sent successful
+
         """
         response = self.session.post(self.apicall + "/v1/configProperty", data=body)
         if response.status_code == 200:
@@ -67,6 +69,7 @@ class ConfigProperty:
 
         Returns:
             JSON: Json object which was sent successful
+
         """
         data = {
         }

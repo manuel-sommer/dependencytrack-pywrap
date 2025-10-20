@@ -10,6 +10,7 @@ class Violation:
 
         Returns:
             List: Returns a list of all policy violations for the entire portfolio
+
         """
         violationlist = list()
         pageNumber = 1
@@ -37,6 +38,7 @@ class Violation:
 
         Returns:
             List: Returns a list of all policy violations for a specific project
+
         """
         response = self.session.get(self.apicall + f"/v1/violation/project/{uuid}", params={"suppressed": suppressed})
         if response.status_code == 200:
@@ -53,6 +55,7 @@ class Violation:
 
         Returns:
             List: Returns a list of all policy violations for a specific component.
+
         """
         response = self.session.get(self.apicall + f"/v1/violation/component/{uuid}", params={"suppressed": suppressed})
         if response.status_code == 200:

@@ -28,6 +28,7 @@ class LDAP:
 
         Args:
             uuid (string): The UUID of the team to retrieve mappings for.
+
         """
         response = self.session.get(self.apicall + f"/v1/ldap/team/{uuid}")
         if response.status_code == 200:
@@ -45,6 +46,7 @@ class LDAP:
         Args:
             team (string): The UUID of the team
             dn (string): DNs
+
         """
         data = {
             "team": team,
@@ -67,6 +69,7 @@ class LDAP:
 
         Args:
             uuid (string): The UUID of the mapping to delete
+
         """
         response = self.session.delete(self.apicall + f"/v1/ldap/mapping/{uuid}")
         if response.status_code == 204:

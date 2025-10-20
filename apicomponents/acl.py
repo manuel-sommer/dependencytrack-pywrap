@@ -7,6 +7,7 @@ class ACL:
         Args:
             team ([string]): [name of the team]
             project ([string]): [name of the project]
+
         """
         data = {"team": team, "project": project}
         response = self.session.put(
@@ -29,6 +30,7 @@ class ACL:
 
         Args:
             uuid ([string]): [The UUID of the team to retrieve mappings for]
+
         """
         response = self.session.get(self.apicall + f"/v1/acl/team/{uuid}?excludeInactive={excludeInactive}")
         if response.status_code == 200:
@@ -45,6 +47,7 @@ class ACL:
         Args:
             teamUuid ([string]): [The UUID of the team to delete the mapping for]
             projectUuid ([string]): [The UUID of the project to delete the mapping for]
+
         """
         response = self.session.delete(
             self.apicall + f"/v1/acl/mapping/team/{teamUuid}/project/{projectUuid}")

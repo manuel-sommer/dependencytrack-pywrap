@@ -21,6 +21,7 @@ class User:
         Args:
             uuid (string): The uuid of the team.
             username (string): A valid username.
+
         """
         data = {
             "uuid": uuid,

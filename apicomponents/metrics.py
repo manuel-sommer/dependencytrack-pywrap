@@ -150,6 +150,7 @@ class Metrics:
         Args:
             uuid (string): The UUID of the component to retrieve metrics for.
             date (string): The start date to retrieve metrics for.(Date format must be YYYYMMDD)
+
         """
         metrics_list = list()
         pageNumber = 1
@@ -174,6 +175,7 @@ class Metrics:
         Args:
             uuid (string): The UUID of the component to retrieve metrics for.
             days (int32): The number of days back to retrieve metrics for.
+
         """
         metrics_list = list()
         pageNumber = 1
@@ -200,6 +202,7 @@ class Metrics:
 
         Returns:
             [string]: [status code]
+
         """
         response = self.session.get(
             self.apicall + f"/v1/metrics/component/{uuid}/refresh")

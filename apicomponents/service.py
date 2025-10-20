@@ -13,6 +13,7 @@ class Service:
 
         Returns:
             List: list of all services for a given service
+
         """
         servicelist = list()
         pageNumber = 1
@@ -45,6 +46,7 @@ class Service:
 
         Returns:
             dict: Returns a specific service.
+
         """
         response = self.session.get(self.apicall + f"/v1/service/{uuid}")
         if response.status_code == 200:
@@ -63,6 +65,7 @@ class Service:
 
         Args:
             uuid (string): The UUID of the project.
+
         """
         response = self.session.delete(self.apicall + f"/v1/service/{uuid}")
         if response.status_code == 200:

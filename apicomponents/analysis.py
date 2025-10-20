@@ -14,6 +14,7 @@ class Analysis:
 
         Returns:
             json:
+
         """
         response = self.session.get(self.apicall + "/v1/analysis/", params={"project": project, "component": component, "vulnerability": vulnerability})
         if response.status_code == 200:
@@ -42,6 +43,7 @@ class Analysis:
                     ],
                     "isSuppressed": true
                     }
+
         """
         response = self.session.put(self.apicall + "/v1/analysis/", data=json.dump({"project": project, "component": component, "vulnerability": vulnerability, "suppressed": suppressed}))
         if response.status_code == 200:

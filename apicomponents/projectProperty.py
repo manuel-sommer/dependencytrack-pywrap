@@ -36,6 +36,7 @@ class ProjectProperty:
 
         Returns:
             data sent in json
+
         """
         # TODO add more options
         data = {

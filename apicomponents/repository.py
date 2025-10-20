@@ -12,6 +12,7 @@ class Repository:
 
         Returns:
             List: Returns a list of all repositories.
+
         """
         respositorylist = list()
         pageNumber = 1
@@ -50,6 +51,7 @@ class Repository:
                                         "internal": true,
                                         "uuid": "579720aa-e150-4b92-abff-2b6bb5dd7af9"
                                         }
+
         """
         data = {
             "uuid": uuid,
@@ -87,6 +89,7 @@ class Repository:
                                         "internal": true,
                                         "uuid": "579720aa-e150-4b92-abff-2b6bb5dd7af9"
                                         }
+
         """
         data = {
             "type": type,
@@ -117,6 +120,7 @@ class Repository:
                             "published": "2021-12-02T16:50:56.704Z",
                             "lastCheck": "2021-12-02T16:50:56.704Z"
                             }
+
         """
         response = self.session.get(self.apicall + "/v1/repository/latest", params={"purl": purl})
         if response.status_code == 200:
@@ -133,6 +137,7 @@ class Repository:
 
         Returns:
             List : list of repositories that support the specific type.
+
         """
         respositorylist = list()
         pageNumber = 1
@@ -154,6 +159,7 @@ class Repository:
 
         Args:
             uuid (string): the UUID of the repository to delete
+
         """
         response = self.session.delete(self.apicall + f"/v1/repository/{uuid}")
         if response.status_code >= 200 or response.status_code <= 299:

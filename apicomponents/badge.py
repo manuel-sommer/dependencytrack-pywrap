@@ -11,6 +11,7 @@ class Badge:
 
         Returns:
             xml: current metrics of specified object in xml
+
         """
         response = self.session.get(
             self.apicall + f"/v1/badge/vulns/project/{name}/{version}")
@@ -34,6 +35,7 @@ class Badge:
 
         Returns:
             xml: current metrics of specified object in xml
+
         """
         response = self.session.get(
             self.apicall + f"/v1/badge/vulns/project/{uuid}")

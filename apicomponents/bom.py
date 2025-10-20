@@ -11,6 +11,7 @@ class Bom:
 
         Args:
             uuid (string): The UUID of the token to query
+
         """
         response = self.session.get(self.apicall + f"/v1/bom/token/{uuid}")
         if response.status_code == 200:
@@ -29,6 +30,7 @@ class Bom:
 
         Returns:
             xml or json: returns dependency metadata for a project in CycloneDX format in xml or json
+
         """
         response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/project/{uuid}", params={"format": format})
         if response.status_code == 200:
@@ -51,6 +53,7 @@ class Bom:
 
         Returns:
             xml or json: returns dependency metadata for a component in CycloneDX format in xml or json
+
         """
         response = self.session.get(self.apicall + f"/v1/bom/cyclonedx/component/{uuid}", params={"format": format})
         if response.status_code == 200:
@@ -77,6 +80,7 @@ class Bom:
 
         Returns:
             response status code
+
         """
         data = dict()
         data["project"] = project
@@ -106,6 +110,7 @@ class Bom:
 
         Returns:
             response status code
+
         """
         data = dict()
         data["project"] = project
