@@ -82,7 +82,7 @@ class Metrics:
 
     def get_metrics_specific_project(self, uuid):
         """
-        returns current metrics for a specific project.
+        Returns current metrics for a specific project.
         uuid: The UUID of the project to retrieve metrics for
         """
         response = self.session.get(
@@ -111,7 +111,7 @@ class Metrics:
 
     def get_metrics_refresh_project(self, uuid):
         """
-        requests a refresh of a specific project metrics.
+        Requests a refresh of a specific project metrics.
         uuid: The UUID of the project to retrieve metrics for.
         """
         response = self.session.get(
