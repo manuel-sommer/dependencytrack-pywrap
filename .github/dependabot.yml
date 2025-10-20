@@ -1,4 +1,3 @@
-
 version: 2
 updates:
   - package-ecosystem: pip
@@ -7,4 +6,3 @@ updates:
       interval: daily
     open-pull-requests-limit: 5
     target-branch: main
-
